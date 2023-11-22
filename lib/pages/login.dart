@@ -5,6 +5,21 @@ class LoginPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold();
+    return Scaffold(
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(360),
+              color: Color.fromARGB(255, 168, 250, 170),
+            ),
+            margin: EdgeInsets.only(right: 40, left: 100),
+            height: 200,
+            width: 200,
+          ),
+        ],
+      ),
+    );
   }
 }
