@@ -7,6 +7,7 @@ class StartPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+<<<<<<< HEAD
         body: Stack(
       children: [
         Flexible(
@@ -44,14 +45,26 @@ class StartPage extends StatelessWidget {
             child: Text("MULAI"),
             onPressed: () {
               Navigator.pushReplacement(
+=======
+      body: Center(
+        child: ElevatedButton(
+            onPressed: () {
+              Navigator.push(
+>>>>>>> 9dfc666fb384b8669f622d07aa475299f1e78546
                   context,
                   MaterialPageRoute(
                     builder: (context) => LoginPage(),
                   ));
             },
+<<<<<<< HEAD
           ),
         ),
       ],
     ));
+=======
+            child: Text('Login Page')),
+      ),
+    );
+>>>>>>> 9dfc666fb384b8669f622d07aa475299f1e78546
   }
 }
