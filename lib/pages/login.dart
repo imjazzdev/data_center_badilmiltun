@@ -1,38 +1,120 @@
 import 'package:data_center_badilmiltun/pages/home.dart';
 import 'package:flutter/material.dart';
 
-class LoginPage extends StatelessWidget {
+class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
 
   @override
+  State<LoginPage> createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-<<<<<<< HEAD
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
+      body: ListView(
         children: [
           Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(360),
-              color: Color.fromARGB(255, 168, 250, 170),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Image.asset(
+                  'assets/logo-eremis.jpeg',
+                  height: 80,
+                  width: 80,
+                ),
+                Image.asset(
+                  'assets/logo_miltun.jpg',
+                  height: 40,
+                  width: 50,
+                ),
+                Image.asset(
+                  'assets/logo-sikoopat.png',
+                  height: 150,
+                  width: 100,
+                ),
+              ],
             ),
-            margin: EdgeInsets.only(right: 40, left: 100),
-            height: 200,
-            width: 200,
+          ),
+          SizedBox(
+            height: 50,
+            width: 60,
+          ),
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Container(
+                margin: EdgeInsets.only(right: 40, left: 40),
+                height: 300,
+                width: 300,
+                child: Image.asset('assets/logo_ma.png'),
+              ),
+            ],
+          ),
+          Padding(
+            padding: const EdgeInsets.all(30),
+            child: Column(
+              children: [
+                TextField(
+                  decoration: InputDecoration(
+                      fillColor: Colors.lightBlue[50],
+                      filled: true,
+                      // icon: Icon(Icons.adb),
+
+                      prefixIcon: Icon(Icons.person),
+                      // prefixText: "name :",
+                      prefixStyle: TextStyle(
+                          color: Colors.blue, fontWeight: FontWeight.w500),
+                      labelText: "ID",
+                      hintText: "no id",
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(25))),
+                  onChanged: (value) {
+                    setState(() {});
+                  },
+                ),
+                SizedBox(
+                  height: 10,
+                  width: 10,
+                ),
+                Container(
+                  child: TextField(
+                    decoration: InputDecoration(
+                        fillColor: Colors.lightBlue[50],
+                        filled: true,
+                        // icon: Icon(Icons.adb),
+                        prefixIcon: Icon(Icons.lock),
+                        // prefixText: "name :",
+                        prefixStyle: TextStyle(
+                            color: Colors.blue, fontWeight: FontWeight.w500),
+                        labelText: "PASSWORD",
+                        hintText: "password",
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(25))),
+                    onChanged: (value) {
+                      setState(() {});
+                    },
+                  ),
+                ),
+                SizedBox(
+                  height: 10,
+                  width: 10,
+                ),
+                Container(
+                  child: ElevatedButton(
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => HomePage(),
+                            ));
+                      },
+                      child: Text('Login')),
+                ),
+              ],
+            ),
           ),
         ],
-=======
-      body: Center(
-        child: ElevatedButton(
-            onPressed: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => HomePage(),
-                  ));
-            },
-            child: Text('Home Page')),
->>>>>>> 9dfc666fb384b8669f622d07aa475299f1e78546
       ),
     );
   }
