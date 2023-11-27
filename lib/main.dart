@@ -1,9 +1,12 @@
 import 'package:data_center_badilmiltun/pages/home.dart';
-import 'package:data_center_badilmiltun/pages/jadwal_cuti.dart';
+import 'package:data_center_badilmiltun/pages/cuti.dart';
+import 'package:data_center_badilmiltun/pages/jadwal_rapat.dart';
 import 'package:data_center_badilmiltun/pages/start.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
+
+import 'utils/color_select.dart';
 
 void main() {
   SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
@@ -20,13 +23,12 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        textTheme: GoogleFonts.poppinsTextTheme(),
-        // appBarTheme: AppBarTheme(
-        //   backgroundColor: Colors.transparent,
-        //   elevation: 0,
-        // )
-      ),
-      home: JadwalCutiPage(),
+          textTheme: GoogleFonts.poppinsTextTheme(),
+          appBarTheme: AppBarTheme(
+            backgroundColor: ColorSelect.blue.withOpacity(0.8),
+            elevation: 0,
+          )),
+      home: StartPage(),
     );
   }
 }
