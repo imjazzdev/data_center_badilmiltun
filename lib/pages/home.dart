@@ -14,6 +14,7 @@ class HomePage extends StatelessWidget {
         centerTitle: true,
       ),
       body: ListView(
+        padding: EdgeInsets.only(top: 10),
         children: [
           CarouselBanner(),
           // Container(
@@ -37,15 +38,32 @@ class HomePage extends StatelessWidget {
             ),
           ),
           Container(
+              height: 300,
               margin: EdgeInsets.only(left: 20, right: 20, bottom: 20),
-              height: 190,
-              child: Row(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  Expanded(child: RapatTerdekat()),
-                  SizedBox(
-                    width: 20,
+                  Row(
+                    children: [
+                      Expanded(child: RapatTerdekat()),
+                      SizedBox(
+                        width: 20,
+                      ),
+                      Expanded(child: RapatTerdekat()),
+                    ],
                   ),
-                  Expanded(child: RapatTerdekat()),
+                  SizedBox(
+                    height: 15,
+                  ),
+                  Row(
+                    children: [
+                      Expanded(child: RapatTerdekat()),
+                      SizedBox(
+                        width: 20,
+                      ),
+                      Expanded(child: RapatTerdekat()),
+                    ],
+                  ),
                 ],
               ))
         ],

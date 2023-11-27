@@ -1,4 +1,5 @@
 import 'package:data_center_badilmiltun/pages/login.dart';
+import 'package:data_center_badilmiltun/utils/color_select.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -8,62 +9,51 @@ class StartPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Stack(
-        children: [
-          Flexible(
-              child: Image(
-            height: double.maxFinite,
-            width: double.maxFinite,
-            image: AssetImage(
-              'assets/bg.jpg',
-            ),
-            fit: BoxFit.cover,
-          )),
-          Positioned(
-            bottom: 50,
+      body: Stack(children: [
+        Flexible(
+            child: Image(
+          height: double.maxFinite,
+          width: double.maxFinite,
+          image: AssetImage(
+            'assets/bg.jpg',
+          ),
+          fit: BoxFit.cover,
+        )),
+        Positioned(
+            bottom: 10,
             child: Container(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(20),
-                color: Color.fromARGB(255, 216, 238, 216).withOpacity(0.5),
+                color: Color.fromARGB(255, 255, 255, 255).withOpacity(0.8),
               ),
-              height: 180,
-              width: 300,
-              margin: EdgeInsets.only(right: 40, left: 50),
-              child: Container(
-                padding: EdgeInsets.all(30),
-                child: Text(
-                  'Selamat Datang',
-                  textAlign: TextAlign.center,
-                  style: GoogleFonts.andika(
-                    textStyle: TextStyle(
-                        color: Color.fromARGB(255, 64, 83, 255),
-                        letterSpacing: .5,
-                        fontSize: 23),
-                  ),
-                ),
-              ),
+              // fit: BoxFit.cover,
+            )),
+        Positioned(
+          bottom: 50,
+          child: Container(
+            padding: EdgeInsets.all(30),
+            child: Text(
+              'Selamat Datang',
+              textAlign: TextAlign.center,
+              style: GoogleFonts.lato(fontSize: 25),
             ),
           ),
-          Positioned(
-            bottom: 90,
-            right: 160,
-            child: Align(
-              alignment: Alignment(0, 0.9),
-              child: ElevatedButton(
-                  child: Text("MULAI"),
-                  onPressed: () {
-                    Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => LoginPage(),
-                        ));
-                  },
-                  style: ElevatedButton.styleFrom(
-                      primary: Color.fromARGB(255, 64, 83, 255))),
-            ),
-          ),
-        ],
-      ),
+        ),
+        Align(
+          alignment: Alignment(0, 0.9),
+          child: ElevatedButton(
+              style:
+                  ElevatedButton.styleFrom(backgroundColor: ColorSelect.green),
+              onPressed: () {
+                Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => LoginPage(),
+                    ));
+              },
+              child: Text('Started')),
+        ),
+      ]),
     );
   }
 }

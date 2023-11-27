@@ -2,14 +2,14 @@ import 'package:data_center_badilmiltun/utils/color_select.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-class JadwalCutiPage extends StatefulWidget {
-  const JadwalCutiPage({super.key});
+class CutiPengajuanPage extends StatefulWidget {
+  const CutiPengajuanPage({super.key});
 
   @override
-  State<JadwalCutiPage> createState() => _JadwalCutiPageState();
+  State<CutiPengajuanPage> createState() => _CutiPengajuanPageState();
 }
 
-class _JadwalCutiPageState extends State<JadwalCutiPage> {
+class _CutiPengajuanPageState extends State<CutiPengajuanPage> {
   TextEditingController alasanCuti =
       TextEditingController(text: 'Keperluan keluarga');
   TextEditingController alamatSaatMenjalankanCuti =
@@ -259,6 +259,9 @@ class _JadwalCutiPageState extends State<JadwalCutiPage> {
                 ]),
               ],
             ),
+          ),
+          SizedBox(
+            height: 20,
           ),
         ],
       ),
