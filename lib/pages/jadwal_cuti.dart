@@ -1,5 +1,6 @@
 import 'package:data_center_badilmiltun/utils/color_select.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class JadwalCutiPage extends StatefulWidget {
   const JadwalCutiPage({super.key});
@@ -9,6 +10,12 @@ class JadwalCutiPage extends StatefulWidget {
 }
 
 class _JadwalCutiPageState extends State<JadwalCutiPage> {
+  TextEditingController alasanCuti =
+      TextEditingController(text: 'Keperluan keluarga');
+  TextEditingController alamatSaatMenjalankanCuti =
+      TextEditingController(text: 'Jakarta');
+  TextEditingController lamaCuti = TextEditingController();
+
   String? valJenisCuti = 'CUTI TAHUNAN';
   List<String> jenis_cuti = [
     'CUTI TAHUNAN',
@@ -119,10 +126,17 @@ class _JadwalCutiPageState extends State<JadwalCutiPage> {
                           fontSize: 14,
                         )),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 10),
-                    child: TextField(),
-                  )
+                  Container(
+                    margin: EdgeInsets.only(bottom: 10),
+                    padding: EdgeInsets.only(left: 10),
+                    alignment: Alignment.centerLeft,
+                    height: 50,
+                    decoration: BoxDecoration(border: Border.all()),
+                    child: Text(DateFormat("dd-MM-yyyy").format(DateTime.now()),
+                        style: TextStyle(
+                          fontSize: 16,
+                        )),
+                  ),
                 ]),
                 TableRow(children: [
                   Padding(
@@ -159,28 +173,89 @@ class _JadwalCutiPageState extends State<JadwalCutiPage> {
                     padding: const EdgeInsets.only(bottom: 10),
                     child: Text('Alasan Cuti'),
                   ),
-                  Text('Sekretariat Ditjen Badilmiltun'),
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 10),
+                    child: Container(
+                      padding: EdgeInsets.only(left: 10),
+                      height: 50,
+                      decoration: BoxDecoration(border: Border.all()),
+                      child: TextField(
+                        decoration: InputDecoration(border: InputBorder.none),
+                        controller: alasanCuti,
+                      ),
+                    ),
+                  ),
                 ]),
                 TableRow(children: [
                   Padding(
                     padding: const EdgeInsets.only(bottom: 10),
                     child: Text('Tanggal Cuti'),
                   ),
-                  Text('08978676656'),
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 10),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Expanded(
+                          flex: 2,
+                          child: Container(
+                            padding: EdgeInsets.only(left: 10),
+                            height: 50,
+                            decoration: BoxDecoration(border: Border.all()),
+                          ),
+                        ),
+                        Expanded(
+                          flex: 1,
+                          child: Text(
+                            'sd',
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
+                        Expanded(
+                          flex: 2,
+                          child: Container(
+                            padding: EdgeInsets.only(left: 10),
+                            height: 50,
+                            decoration: BoxDecoration(border: Border.all()),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
                 ]),
                 TableRow(children: [
                   Padding(
                     padding: const EdgeInsets.only(bottom: 10),
                     child: Text('Lama Cuti'),
                   ),
-                  Text('Pranata Komputer'),
+                  Container(
+                    margin: EdgeInsets.only(bottom: 10),
+                    padding: EdgeInsets.only(left: 10),
+                    height: 50,
+                    decoration: BoxDecoration(border: Border.all()),
+                    child: TextField(
+                      decoration: InputDecoration(border: InputBorder.none),
+                      controller: alamatSaatMenjalankanCuti,
+                    ),
+                  ),
                 ]),
                 TableRow(children: [
                   Padding(
                     padding: const EdgeInsets.only(bottom: 10),
                     child: Text('Alamat Saat Menjalankan Cuti'),
                   ),
-                  Text('Sekretariat Ditjen Badilmiltun'),
+                  Container(
+                    margin: EdgeInsets.only(bottom: 10),
+                    padding: EdgeInsets.only(left: 10),
+                    height: 50,
+                    decoration: BoxDecoration(
+                      border: Border.all(),
+                    ),
+                    child: TextField(
+                      decoration: InputDecoration(border: InputBorder.none),
+                      controller: alamatSaatMenjalankanCuti,
+                    ),
+                  ),
                 ]),
               ],
             ),
