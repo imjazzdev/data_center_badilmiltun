@@ -28,7 +28,7 @@ class _CutiPengajuanPageState extends State<CutiPengajuanPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Jadwal cuti'),
+        title: Text('Pengajuan cuti'),
       ),
       body: ListView(
         padding: EdgeInsets.all(15),

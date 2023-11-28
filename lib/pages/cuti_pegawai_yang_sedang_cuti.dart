@@ -1,5 +1,10 @@
-import 'package:data_center_badilmiltun/model/http.dart';
+import 'package:data_center_badilmiltun/componen/card_shimmer.dart';
+import 'package:data_center_badilmiltun/componen/no_data_widget.dart';
+import 'package:data_center_badilmiltun/model/pegawai_cuti.dart';
 import 'package:flutter/material.dart';
+
+import '../services/repository.dart';
+import '../utils/color_select.dart';
 
 class CutiPegawaiYangSedangCuti extends StatefulWidget {
   @override
@@ -8,90 +13,100 @@ class CutiPegawaiYangSedangCuti extends StatefulWidget {
 }
 
 class _CutiPegawaiYangSedangCutiState extends State<CutiPegawaiYangSedangCuti> {
-  HttpServices dataResponse = HttpServices();
+  List list_pegawai_cuti = [];
+  Repository repository = Repository();
+
+  getData() async {
+    list_pegawai_cuti = await repository.getPegawaiSedangCuti();
+  }
 
   @override
   void initState() {
-    HttpServices.connectApiPegawaiSedangCuti().then((value) {
-      setState(() {
-        dataResponse = value;
-      });
-    });
+    getData();
+    Future.delayed(
+      Duration(seconds: 2),
+      () {
+        setState(() {});
+      },
+    );
+
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Pegawai yang sedang cuti'),
-      ),
-      body: ListView(
-        padding: EdgeInsets.all(20),
-        children: [
-          InkWell(
-            onTap: () {},
-            child: Container(
-              padding: EdgeInsets.all(15),
-              height: 120,
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20),
-                  border: Border.all(color: Colors.red),
-                  color: Colors.white),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Container(
-                    height: 70,
-                    width: 70,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(15),
-                        color: Colors.grey.shade200),
-                    child: Icon(
-                      Icons.person_2_rounded,
-                      color: Colors.blue.shade300,
-                      size: 60,
-                    ),
-                  ),
-                  SizedBox(
-                    width: 15,
-                  ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+        appBar: AppBar(
+          title: Text('Pegawai yang sedang cuti'),
+        ),
+        body: ListView.builder(
+            padding: EdgeInsets.all(15),
+            itemCount: list_pegawai_cuti.length,
+            itemBuilder: (context, index) => Container(
+                  padding: EdgeInsets.all(10),
+                  height: 120,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      color: Colors.white,
+                      boxShadow: [
+                        BoxShadow(
+                            color: Colors.blue.shade300.withOpacity(0.2),
+                            blurRadius: 3,
+                            offset: Offset(3, 3),
+                            spreadRadius: 3)
+                      ]),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      Text(
-                        (dataResponse.nama == null)
-                            ? 'Belum ada data'
-                            : dataResponse.nama.toString(),
-                        style: TextStyle(
-                            fontSize: 16, fontWeight: FontWeight.bold),
+                      Container(
+                        height: 90,
+                        width: 90,
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(15),
+                          child: Image.network(
+                            'https://clone-eremis.djmt.id/assets/upload/profile/${list_pegawai_cuti[index].photo}',
+                            fit: BoxFit.cover,
+                          ),
+                        ),
                       ),
-                      Text(
-                          (dataResponse.tanggal_cuti == null)
-                              ? 'Belum ada data'
-                              : dataResponse.tanggal_cuti.toString(),
-                          textAlign: TextAlign.center,
-                          style: TextStyle(fontSize: 14, color: Colors.grey)),
-                      Text(
-                          (dataResponse.jenis_cuti == null)
-                              ? 'Belum ada data'
-                              : dataResponse.jenis_cuti.toString(),
-                          textAlign: TextAlign.center,
-                          style: TextStyle(fontSize: 14, color: Colors.grey)),
-                      Text(
-                          (dataResponse.alasan_cuti == null)
-                              ? 'Belum ada data'
-                              : dataResponse.alasan_cuti.toString(),
-                          textAlign: TextAlign.center,
-                          style: TextStyle(fontSize: 14, color: Colors.grey))
+                      SizedBox(
+                        width: 15,
+                      ),
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            list_pegawai_cuti[index].nama,
+                            style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.blue),
+                          ),
+                          Text(list_pegawai_cuti[index].tanggal_cuti,
+                              textAlign: TextAlign.center,
+                              style:
+                                  TextStyle(fontSize: 14, color: Colors.grey)),
+                          Container(
+                            padding: EdgeInsets.all(7),
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                color: Colors.blue.shade50),
+                            child: Text(list_pegawai_cuti[index].jenis_cuti,
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                    fontSize: 14, color: ColorSelect.blue)),
+                          ),
+                          // Text(list_pegawai_cuti[index].alasan_cuti,
+                          //     textAlign: TextAlign.center,
+                          //     style:
+                          //         TextStyle(fontSize: 14, color: Colors.grey))
+                        ],
+                      )
                     ],
-                  )
-                ],
-              ),
-            ),
-          )
-        ],
-      ),
-    );
+                  ),
+                ))
+        // : NoDataWidget(),
+        );
   }
 }

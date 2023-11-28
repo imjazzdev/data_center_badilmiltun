@@ -2,39 +2,62 @@ import 'package:data_center_badilmiltun/utils/color_select.dart';
 import 'package:flutter/material.dart';
 
 class RapatTerdekat extends StatelessWidget {
-  const RapatTerdekat({super.key});
+  final String title, tempat, tanggal, pukul;
+
+  RapatTerdekat({
+    required this.title,
+    required this.tempat,
+    required this.tanggal,
+    required this.pukul,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.only(top: 15),
+      height: 120,
+      width: double.maxFinite,
+      padding: EdgeInsets.all(15),
       decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(20),
-          border: Border.all(color: ColorSelect.blue)
-          // boxShadow: [
-          //   BoxShadow(
-          //       color: ColorSelect.blue.withOpacity(0.2),
-          //       offset: Offset(3, 3),
-          //       blurRadius: 5)
-          // ]
-          ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          boxShadow: [
+            BoxShadow(
+                color: ColorSelect.blue.withOpacity(0.3),
+                offset: Offset(2, 2),
+                blurRadius: 10)
+          ]),
+      child: Row(
         children: [
           Image.asset('assets/discuss.png'),
-          Text(
-            'Rapat Evaluasi',
-            style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
-                color: Colors.grey.shade800),
+          SizedBox(
+            width: 15,
           ),
-          Text(
-            '13.00 - 15.00',
-            style: TextStyle(
-              fontSize: 14,
-            ),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              Text(
+                title,
+                style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.grey.shade800),
+              ),
+              Text(pukul,
+                  style: TextStyle(
+                      fontSize: 14,
+                      color: Colors.grey,
+                      fontWeight: FontWeight.bold)),
+              Container(
+                padding: EdgeInsets.all(7),
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    color: Colors.blue.shade50),
+                child: Text(pukul,
+                    textAlign: TextAlign.center,
+                    style: TextStyle(fontSize: 14, color: ColorSelect.blue)),
+              ),
+            ],
           ),
         ],
       ),

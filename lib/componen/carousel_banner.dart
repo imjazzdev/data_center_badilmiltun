@@ -11,7 +11,7 @@ class CarouselBanner extends StatelessWidget {
         height: MediaQuery.of(context).size.height * 0.33,
         child: CarouselSlider(
           options: CarouselOptions(
-            autoPlay: false,
+            autoPlay: true,
             autoPlayAnimationDuration: Duration(seconds: 3),
             disableCenter: false,
             pauseAutoPlayInFiniteScroll: true,

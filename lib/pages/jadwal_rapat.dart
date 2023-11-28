@@ -1,3 +1,4 @@
+import 'package:data_center_badilmiltun/componen/no_data_widget.dart';
 import 'package:data_center_badilmiltun/model/jadwal_rapat.dart';
 import 'package:data_center_badilmiltun/model/user_ratgas.dart';
 import 'package:data_center_badilmiltun/utils/color_select.dart';
@@ -13,23 +14,22 @@ class JadwalRapatPage extends StatefulWidget {
 }
 
 class _JadwalRapatPageState extends State<JadwalRapatPage> {
-  List<JadwalRapat> list_jadwal_rapat = [];
+  List list_jadwal_rapat = [];
   Repository repository = Repository();
 
   getData() async {
-    list_jadwal_rapat = await repository.getJawalRapatSikoopat();
+    list_jadwal_rapat = await repository.getJadwalRapatSikoopat();
   }
 
   @override
   void initState() {
     getData();
-    // Future.delayed(
-    //   Duration(seconds: 2),
-    //   () {
-    //     setState(() {});
-    //   },
-    // );
-    setState(() {});
+    Future.delayed(
+      Duration(seconds: 1),
+      () {
+        setState(() {});
+      },
+    );
 
     super.initState();
   }
@@ -37,77 +37,87 @@ class _JadwalRapatPageState extends State<JadwalRapatPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Jadwal rapat'),
-      ),
-      body: ListView.builder(
-        padding: const EdgeInsets.all(20),
-        itemCount: list_jadwal_rapat.length,
-        itemBuilder: (context, index) => Container(
-          padding: const EdgeInsets.all(10),
-          margin: const EdgeInsets.only(bottom: 15),
-          height: 120,
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(20),
-              color: Colors.white,
-              boxShadow: [
-                BoxShadow(
-                    color: Colors.blue.shade300.withOpacity(0.2),
-                    blurRadius: 3,
-                    offset: Offset(3, 3),
-                    spreadRadius: 3)
-              ]),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Container(
-                height: 85,
-                width: 85,
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(15),
-                    color: Colors.grey.shade200),
-                child: Icon(
-                  Icons.person_2_rounded,
-                  color: Colors.blue.shade200,
-                  size: 70,
+        appBar: AppBar(
+          title: const Text('Jadwal rapat'),
+        ),
+        body: ListView.builder(
+          padding: const EdgeInsets.all(20),
+          itemCount: list_jadwal_rapat.length,
+          itemBuilder: (context, index) => Container(
+            padding: const EdgeInsets.all(10),
+            margin: const EdgeInsets.only(bottom: 20),
+            height: 120,
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(20),
+                color: Colors.white,
+                boxShadow: [
+                  BoxShadow(
+                      color: Colors.blue.shade300.withOpacity(0.2),
+                      blurRadius: 3,
+                      offset: Offset(3, 3),
+                      spreadRadius: 3)
+                ]),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Flexible(
+                  flex: 3,
+                  child: Container(
+                      height: 85,
+                      width: 85,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(15),
+                          color: Colors.grey.shade100),
+                      child: Image.asset('assets/rapat.png')),
                 ),
-              ),
-              SizedBox(
-                width: 15,
-              ),
-              Container(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Flexible(
-                      child: Text(
-                        list_jadwal_rapat[index].title,
-                        style: TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.bold,
-                            overflow: TextOverflow.fade,
-                            color: ColorSelect.blue),
-                      ),
-                    ),
-                    Flexible(
-                      child: Text(list_jadwal_rapat[index].tanggal,
-                          textAlign: TextAlign.center,
-                          style: TextStyle(fontSize: 14, color: Colors.grey)),
-                    ),
-                    Flexible(
-                      child: Container(
-                        padding: EdgeInsets.all(7),
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            color: Colors.blue.shade50),
-                        child: Text(list_jadwal_rapat[index].pukul,
-                            textAlign: TextAlign.center,
+                Flexible(
+                  flex: 1,
+                  child: SizedBox(
+                    width: 15,
+                  ),
+                ),
+
+                Flexible(
+                  flex: 8,
+                  child: Container(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Expanded(
+                          child: Text(
+                            list_jadwal_rapat[index].title,
+                            overflow: TextOverflow.ellipsis,
+                            maxLines: 1,
                             style: TextStyle(
-                                fontSize: 14, color: ColorSelect.blue)),
-                      ),
-                    )
-                  ],
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                                color: ColorSelect.blue),
+                          ),
+                        ),
+                        Expanded(
+                          child: Text(list_jadwal_rapat[index].tanggal,
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                  fontSize: 14,
+                                  color: Colors.grey,
+                                  fontWeight: FontWeight.bold)),
+                        ),
+                        Expanded(
+                          child: Container(
+                            padding: EdgeInsets.all(7),
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                color: Colors.blue.shade50),
+                            child: Text(list_jadwal_rapat[index].pukul,
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                    fontSize: 14, color: ColorSelect.blue)),
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
                 ),
 
                 // child: Table(
@@ -156,11 +166,9 @@ class _JadwalRapatPageState extends State<JadwalRapatPage> {
                 //             fontSize: 16,
                 //           )),
                 //     ]),
-              )
-            ],
+              ],
+            ),
           ),
-        ),
-      ),
-    );
+        ));
   }
 }

@@ -10,9 +10,10 @@ class JadwalRapat {
 
   factory JadwalRapat.fromJson(Map<String, dynamic> json) {
     return JadwalRapat(
-        title: json['title'],
-        tempat: json['tempat'],
-        tanggal: json['tanggal'],
-        pukul: json['pukul']);
+      title: json['title'],
+      tempat: json['tempat'],
+      tanggal: json['tanggal'],
+      pukul: json['pukul'],
+    );
   }
 }

@@ -39,6 +39,7 @@ dependencies:
   carousel_slider: 
   intl: 
   http:
+  shimmer: ^3.0.0
 
 dev_dependencies:
   flutter_test:
