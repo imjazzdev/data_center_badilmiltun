@@ -68,23 +68,28 @@ class _HomePageState extends State<HomePage> {
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
           ),
-          // Container(
-          //     height: 400,
-          //     margin: EdgeInsets.only(left: 20, right: 20, bottom: 20),
-          //     child: Column(
-          //       children: [
-          //         RapatTerdekat(
-          //           title: list_jadwal_rapat[0].pukul,
-          //           tanggal: list_jadwal_rapat[0].tanggal,
-          //           pukul: list_jadwal_rapat[0].pukul,
-          //           tempat: list_jadwal_rapat[0].tempat,
-          //         ),
-          //         // SizedBox(
-          //         //   width: 20,
-          //         // ),
-          //         // RapatTerdekat(),
-          //       ],
-          //     ))
+          Container(
+              margin: EdgeInsets.only(left: 20, right: 20, bottom: 20),
+              child: Column(
+                children: [
+                  RapatTerdekat(
+                    title: 'Rapat Evaluasi',
+                    tanggal: '23-11-2023',
+                    pukul: '09.00 - 11.00',
+                    tempat: 'Ruang Rapat Besar Ditjen Badilmiltun',
+                  ),
+                  RapatTerdekat(
+                    title: 'Rapat Evaluasi',
+                    tanggal: '23-11-2023',
+                    pukul: '09.00 - 11.00',
+                    tempat: 'Ruang Rapat Besar Ditjen Badilmiltun',
+                  ),
+                  // SizedBox(
+                  //   width: 20,
+                  // ),
+                  // RapatTerdekat(),
+                ],
+              ))
         ],
       ),
     );

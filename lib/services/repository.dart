@@ -50,9 +50,12 @@ class Repository {
       final response = await http.get(Uri.parse(urlGetJadwalRapatSikoopat));
       if (response.statusCode == 200) {
         Iterable it = jsonDecode(response.body);
-        print(jsonDecode(response.body));
-        List<JadwalRapat> jadwalRapat =
-            it.map((e) => JadwalRapat.fromJson(e)).toList();
+        // print(jsonDecode(response.body));
+        List<JadwalRapat> jadwalRapat = it
+            .map((e) => JadwalRapat.fromJson(e))
+            .toList()
+            .sublist(it.length - 20);
+        print(jadwalRapat);
         return jadwalRapat;
       }
     } catch (e) {

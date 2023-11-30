@@ -15,6 +15,8 @@ class _CutiPengajuanPageState extends State<CutiPengajuanPage> {
   TextEditingController alamatSaatMenjalankanCuti =
       TextEditingController(text: 'Jakarta');
   TextEditingController lamaCuti = TextEditingController();
+  TextEditingController atasanLangsung = TextEditingController();
+  TextEditingController pejabatBerwenang = TextEditingController();
 
   String? valJenisCuti = 'CUTI TAHUNAN';
   List<String> jenis_cuti = [
@@ -105,161 +107,245 @@ class _CutiPengajuanPageState extends State<CutiPengajuanPage> {
             height: 15,
           ),
           Container(
-            padding: EdgeInsets.all(10),
+            padding: EdgeInsets.only(left: 10, right: 10, top: 20, bottom: 20),
             decoration: BoxDecoration(boxShadow: [
               BoxShadow(
                   blurRadius: 1,
                   spreadRadius: 1,
                   color: ColorSelect.green.withOpacity(0.1))
             ], color: Colors.white, borderRadius: BorderRadius.circular(15)),
-            child: Table(
-              columnWidths: {
-                0: FixedColumnWidth(140.0),
-                1: FlexColumnWidth(),
-              },
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                TableRow(children: [
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 10),
-                    child: Text('Tgl Pengajuan Cuti',
-                        style: TextStyle(
-                          fontSize: 14,
-                        )),
-                  ),
-                  Container(
-                    margin: EdgeInsets.only(bottom: 10),
-                    padding: EdgeInsets.only(left: 10),
-                    alignment: Alignment.centerLeft,
-                    height: 50,
-                    decoration: BoxDecoration(border: Border.all()),
-                    child: Text(DateFormat("dd-MM-yyyy").format(DateTime.now()),
-                        style: TextStyle(
-                          fontSize: 16,
-                        )),
-                  ),
-                ]),
-                TableRow(children: [
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 10),
-                    child: Text('Jenis Cuti'),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 10),
-                    child: Container(
-                      padding: EdgeInsets.only(left: 10),
-                      decoration: BoxDecoration(border: Border.all()),
-                      child: DropdownButton(
-                        hint: Text("Select Status"),
-                        underline: SizedBox(),
-                        isExpanded: true,
-                        value: valJenisCuti,
-                        items: jenis_cuti.map((value) {
-                          return DropdownMenuItem(
-                            child: Text(value),
-                            value: value,
-                          );
-                        }).toList(),
-                        onChanged: (value) {
-                          setState(() {
-                            valJenisCuti = value;
-                          });
-                        },
+                Table(
+                  columnWidths: {
+                    0: FixedColumnWidth(140.0),
+                    1: FlexColumnWidth(),
+                  },
+                  children: [
+                    TableRow(children: [
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 10),
+                        child: Text('Tgl Pengajuan Cuti',
+                            style: TextStyle(
+                              fontSize: 14,
+                            )),
                       ),
-                    ),
-                  )
-                ]),
-                TableRow(children: [
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 10),
-                    child: Text('Alasan Cuti'),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 10),
-                    child: Container(
-                      padding: EdgeInsets.only(left: 10),
-                      height: 50,
-                      decoration: BoxDecoration(border: Border.all()),
-                      child: TextField(
-                        decoration: InputDecoration(border: InputBorder.none),
-                        controller: alasanCuti,
+                      Container(
+                        margin: EdgeInsets.only(bottom: 10),
+                        padding: EdgeInsets.only(left: 10),
+                        alignment: Alignment.centerLeft,
+                        height: 50,
+                        decoration: BoxDecoration(border: Border.all()),
+                        child: Text(
+                            DateFormat("dd-MM-yyyy").format(DateTime.now()),
+                            style: TextStyle(
+                              fontSize: 16,
+                            )),
                       ),
-                    ),
-                  ),
-                ]),
-                TableRow(children: [
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 10),
-                    child: Text('Tanggal Cuti'),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 10),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Expanded(
-                          flex: 2,
-                          child: Container(
-                            padding: EdgeInsets.only(left: 10),
-                            height: 50,
-                            decoration: BoxDecoration(border: Border.all()),
+                    ]),
+                    TableRow(children: [
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 10),
+                        child: Text('Jenis Cuti'),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 10),
+                        child: Container(
+                          padding: EdgeInsets.only(left: 10),
+                          decoration: BoxDecoration(border: Border.all()),
+                          child: DropdownButton(
+                            hint: Text("Select Status"),
+                            underline: SizedBox(),
+                            isExpanded: true,
+                            value: valJenisCuti,
+                            items: jenis_cuti.map((value) {
+                              return DropdownMenuItem(
+                                child: Text(value),
+                                value: value,
+                              );
+                            }).toList(),
+                            onChanged: (value) {
+                              setState(() {
+                                valJenisCuti = value;
+                              });
+                            },
                           ),
                         ),
-                        Expanded(
-                          flex: 1,
-                          child: Text(
-                            'sd',
-                            textAlign: TextAlign.center,
+                      )
+                    ]),
+                    TableRow(children: [
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 10),
+                        child: Text('Alasan Cuti'),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 10),
+                        child: Container(
+                          padding: EdgeInsets.only(left: 10),
+                          height: 50,
+                          decoration: BoxDecoration(border: Border.all()),
+                          child: TextField(
+                            decoration:
+                                InputDecoration(border: InputBorder.none),
+                            controller: alasanCuti,
                           ),
                         ),
-                        Expanded(
-                          flex: 2,
-                          child: Container(
-                            padding: EdgeInsets.only(left: 10),
-                            height: 50,
-                            decoration: BoxDecoration(border: Border.all()),
-                          ),
+                      ),
+                    ]),
+                    TableRow(children: [
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 10),
+                        child: Text('Tanggal Cuti'),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 10),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            Expanded(
+                              flex: 2,
+                              child: Container(
+                                padding: EdgeInsets.only(left: 10),
+                                height: 50,
+                                decoration: BoxDecoration(border: Border.all()),
+                              ),
+                            ),
+                            Expanded(
+                              flex: 1,
+                              child: Text(
+                                'sd',
+                                textAlign: TextAlign.center,
+                              ),
+                            ),
+                            Expanded(
+                              flex: 2,
+                              child: Container(
+                                padding: EdgeInsets.only(left: 10),
+                                height: 50,
+                                decoration: BoxDecoration(border: Border.all()),
+                              ),
+                            ),
+                          ],
                         ),
-                      ],
-                    ),
-                  ),
-                ]),
-                TableRow(children: [
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 10),
-                    child: Text('Lama Cuti'),
-                  ),
-                  Container(
-                    margin: EdgeInsets.only(bottom: 10),
-                    padding: EdgeInsets.only(left: 10),
-                    height: 50,
-                    decoration: BoxDecoration(border: Border.all()),
-                    child: TextField(
-                      decoration: InputDecoration(border: InputBorder.none),
-                      controller: alamatSaatMenjalankanCuti,
-                    ),
-                  ),
-                ]),
-                TableRow(children: [
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 10),
-                    child: Text('Alamat Saat Menjalankan Cuti'),
-                  ),
-                  Container(
-                    margin: EdgeInsets.only(bottom: 10),
-                    padding: EdgeInsets.only(left: 10),
-                    height: 50,
+                      ),
+                    ]),
+                    TableRow(children: [
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 10),
+                        child: Text('Lama Cuti'),
+                      ),
+                      Container(
+                        margin: EdgeInsets.only(bottom: 10),
+                        padding: EdgeInsets.only(left: 10),
+                        height: 50,
+                        decoration: BoxDecoration(border: Border.all()),
+                        child: TextField(
+                          decoration: InputDecoration(border: InputBorder.none),
+                          controller: lamaCuti,
+                        ),
+                      ),
+                    ]),
+                    TableRow(children: [
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 10),
+                        child: Text('Alamat Saat Menjalankan Cuti'),
+                      ),
+                      Container(
+                        margin: EdgeInsets.only(bottom: 10),
+                        padding: EdgeInsets.only(left: 10),
+                        height: 50,
+                        decoration: BoxDecoration(
+                          border: Border.all(),
+                        ),
+                        child: TextField(
+                          decoration: InputDecoration(border: InputBorder.none),
+                          controller: alamatSaatMenjalankanCuti,
+                        ),
+                      ),
+                    ]),
+                  ],
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(20.0),
+                  child: Container(
                     decoration: BoxDecoration(
-                      border: Border.all(),
-                    ),
-                    child: TextField(
-                      decoration: InputDecoration(border: InputBorder.none),
-                      controller: alamatSaatMenjalankanCuti,
-                    ),
+                        border: Border.fromBorderSide(BorderSide(
+                            width: 0.5, color: Colors.grey.shade300))),
                   ),
-                ]),
+                ),
+                Text(
+                  'Data atasan',
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                ),
+                SizedBox(
+                  height: 15,
+                ),
+                Table(
+                  columnWidths: {
+                    0: FixedColumnWidth(140.0),
+                    1: FlexColumnWidth(),
+                  },
+                  children: [
+                    TableRow(children: [
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 10),
+                        child: Text('Atasan Lansung'),
+                      ),
+                      Container(
+                        margin: EdgeInsets.only(bottom: 10),
+                        padding: EdgeInsets.only(left: 10),
+                        height: 50,
+                        decoration: BoxDecoration(
+                          border: Border.all(),
+                        ),
+                        child: TextField(
+                          decoration: InputDecoration(border: InputBorder.none),
+                          controller: atasanLangsung,
+                        ),
+                      ),
+                    ]),
+                    TableRow(children: [
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 10),
+                        child: Text('Pejabat yang berwenang'),
+                      ),
+                      Container(
+                        margin: EdgeInsets.only(bottom: 10),
+                        padding: EdgeInsets.only(left: 10),
+                        height: 50,
+                        decoration: BoxDecoration(
+                          border: Border.all(),
+                        ),
+                        child: TextField(
+                          decoration: InputDecoration(border: InputBorder.none),
+                          controller: pejabatBerwenang,
+                        ),
+                      ),
+                    ]),
+                  ],
+                )
               ],
             ),
           ),
+          SizedBox(
+            height: 20,
+          ),
+          ElevatedButton(
+              onPressed: () {},
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(Icons.check),
+                  SizedBox(
+                    width: 5,
+                  ),
+                  Text(
+                    'Save',
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                ],
+              )),
           SizedBox(
             height: 20,
           ),

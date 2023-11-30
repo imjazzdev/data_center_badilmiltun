@@ -15,6 +15,7 @@ class RapatTerdekat extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: 120,
+      margin: EdgeInsets.only(bottom: 20),
       width: double.maxFinite,
       padding: EdgeInsets.all(15),
       decoration: BoxDecoration(

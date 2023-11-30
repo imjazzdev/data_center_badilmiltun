@@ -19,39 +19,46 @@ class StartPage extends StatelessWidget {
           ),
           fit: BoxFit.cover,
         )),
-        Positioned(
-            bottom: 10,
-            child: Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(20),
-                color: Color.fromARGB(255, 255, 255, 255).withOpacity(0.8),
-              ),
-              // fit: BoxFit.cover,
-            )),
-        Positioned(
-          bottom: 50,
+        Align(
+          alignment: Alignment.bottomCenter,
           child: Container(
-            padding: EdgeInsets.all(30),
-            child: Text(
-              'Selamat Datang',
-              textAlign: TextAlign.center,
-              style: GoogleFonts.lato(fontSize: 25),
+            height: 170,
+            margin: EdgeInsets.only(bottom: 70),
+            width: MediaQuery.of(context).size.width * 0.9,
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(15),
+                color: Colors.white.withOpacity(0.8)),
+            padding: EdgeInsets.all(20),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Text(
+                  'Selamat Datang',
+                  textAlign: TextAlign.center,
+                  style: GoogleFonts.lato(fontSize: 25),
+                ),
+                Text(
+                  'Lorem ipsum  is simply dummy text of the',
+                  textAlign: TextAlign.center,
+                  style: GoogleFonts.lato(fontSize: 16),
+                ),
+                Align(
+                  alignment: Alignment(0, 0.9),
+                  child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                          backgroundColor: ColorSelect.green),
+                      onPressed: () {
+                        Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => LoginPage(),
+                            ));
+                      },
+                      child: Text('Masuk')),
+                ),
+              ],
             ),
           ),
-        ),
-        Align(
-          alignment: Alignment(0, 0.9),
-          child: ElevatedButton(
-              style:
-                  ElevatedButton.styleFrom(backgroundColor: ColorSelect.green),
-              onPressed: () {
-                Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => LoginPage(),
-                    ));
-              },
-              child: Text('Started')),
         ),
       ]),
     );

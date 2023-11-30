@@ -12,7 +12,7 @@ class CarouselBanner extends StatelessWidget {
         child: CarouselSlider(
           options: CarouselOptions(
             autoPlay: true,
-            autoPlayAnimationDuration: Duration(seconds: 3),
+            autoPlayAnimationDuration: Duration(seconds: 2),
             disableCenter: false,
             pauseAutoPlayInFiniteScroll: true,
             viewportFraction: 2,
@@ -28,7 +28,7 @@ class CarouselBanner extends StatelessWidget {
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(15),
                     child: Image.asset(
-                      'assets/banner1.jpg',
+                      'assets/banner2.jpg',
                       fit: BoxFit.cover,
                       width: MediaQuery.of(context).size.width * 0.95,
                     ),
@@ -43,7 +43,7 @@ class CarouselBanner extends StatelessWidget {
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(15),
                     child: Image.asset(
-                      'assets/banner2.jpg',
+                      'assets/banner1.jpg',
                       fit: BoxFit.cover,
                       width: MediaQuery.of(context).size.width * 0.95,
                     ),
