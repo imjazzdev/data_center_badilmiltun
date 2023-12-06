@@ -26,6 +26,21 @@ class _CutiPengajuanPageState extends State<CutiPengajuanPage> {
     'CUTI MELAHIRKAN',
     'CUTI KARENA ALASAN PENTING'
   ];
+
+  String? valAtasanLangsung =
+      'Jefri Ardianto, S.T., M.M. (Kabag Organisasi dan Tata Laksana Sekretariat)';
+  List<String> atasan_langsung = [
+    'Jefri Ardianto, S.T., M.M. (Kabag Organisasi dan Tata Laksana Sekretariat)',
+  ];
+
+  String? valPejabatBerwenang =
+      'Jefri Ardianto, S.T., M.M. (Kabag Organisasi dan Tata Laksana Sekretariat)';
+  List<String> pejabat_berwenang = [
+    'Jefri Ardianto, S.T., M.M. (Kabag Organisasi dan Tata Laksana Sekretariat)',
+  ];
+
+  DateTime? _dateTime;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -205,10 +220,27 @@ class _CutiPengajuanPageState extends State<CutiPengajuanPage> {
                           children: [
                             Expanded(
                               flex: 2,
-                              child: Container(
-                                padding: EdgeInsets.only(left: 10),
-                                height: 50,
-                                decoration: BoxDecoration(border: Border.all()),
+                              child: InkWell(
+                                onTap: () {
+                                  showDatePicker(
+                                    context: context,
+                                    initialDate: DateTime.now(),
+                                    firstDate: DateTime(2000),
+                                    lastDate: DateTime(2099),
+                                  ).then((date) {
+                                    //tambahkan setState dan panggil variabel _dateTime.
+                                    setState(() {
+                                      _dateTime = date;
+                                    });
+                                  });
+                                },
+                                child: Container(
+                                  padding: EdgeInsets.only(left: 10),
+                                  height: 50,
+                                  decoration:
+                                      BoxDecoration(border: Border.all()),
+                                  child: Text(_dateTime.toString()),
+                                ),
                               ),
                             ),
                             Expanded(
@@ -292,36 +324,68 @@ class _CutiPengajuanPageState extends State<CutiPengajuanPage> {
                         padding: const EdgeInsets.only(bottom: 10),
                         child: Text('Atasan Lansung'),
                       ),
-                      Container(
-                        margin: EdgeInsets.only(bottom: 10),
-                        padding: EdgeInsets.only(left: 10),
-                        height: 50,
-                        decoration: BoxDecoration(
-                          border: Border.all(),
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 10),
+                        child: Container(
+                          padding: EdgeInsets.only(left: 10),
+                          decoration: BoxDecoration(border: Border.all()),
+                          child: DropdownButton(
+                            hint: Text("Select Status"),
+                            underline: SizedBox(),
+                            isExpanded: true,
+                            value: valAtasanLangsung,
+                            items: atasan_langsung.map((value) {
+                              return DropdownMenuItem(
+                                child: Text(
+                                  value,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                                value: value,
+                              );
+                            }).toList(),
+                            onChanged: (value) {
+                              setState(() {
+                                valAtasanLangsung = value;
+                              });
+                            },
+                          ),
                         ),
-                        child: TextField(
-                          decoration: InputDecoration(border: InputBorder.none),
-                          controller: atasanLangsung,
-                        ),
-                      ),
+                      )
                     ]),
                     TableRow(children: [
                       Padding(
                         padding: const EdgeInsets.only(bottom: 10),
                         child: Text('Pejabat yang berwenang'),
                       ),
-                      Container(
-                        margin: EdgeInsets.only(bottom: 10),
-                        padding: EdgeInsets.only(left: 10),
-                        height: 50,
-                        decoration: BoxDecoration(
-                          border: Border.all(),
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 10),
+                        child: Container(
+                          padding: EdgeInsets.only(left: 10),
+                          decoration: BoxDecoration(border: Border.all()),
+                          child: DropdownButton(
+                            hint: Text(
+                              "Select Status",
+                            ),
+                            underline: SizedBox(),
+                            isExpanded: true,
+                            value: valPejabatBerwenang,
+                            items: pejabat_berwenang.map((value) {
+                              return DropdownMenuItem(
+                                child: Text(
+                                  value,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                                value: value,
+                              );
+                            }).toList(),
+                            onChanged: (value) {
+                              setState(() {
+                                valPejabatBerwenang = value;
+                              });
+                            },
+                          ),
                         ),
-                        child: TextField(
-                          decoration: InputDecoration(border: InputBorder.none),
-                          controller: pejabatBerwenang,
-                        ),
-                      ),
+                      )
                     ]),
                   ],
                 )
