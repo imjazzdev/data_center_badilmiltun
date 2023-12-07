@@ -1,3 +1,4 @@
+import 'package:data_center_badilmiltun/services/repository.dart';
 import 'package:data_center_badilmiltun/utils/color_select.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -40,6 +41,18 @@ class _CutiPengajuanPageState extends State<CutiPengajuanPage> {
   ];
 
   DateTime? _dateTime;
+
+  Repository repository = Repository();
+
+  getPost() async {
+    bool response = await repository.postPengajuanCuti();
+  }
+
+  @override
+  void initState() {
+    getPost();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -235,6 +248,7 @@ class _CutiPengajuanPageState extends State<CutiPengajuanPage> {
                                   });
                                 },
                                 child: Container(
+                                  alignment: Alignment.center,
                                   padding: EdgeInsets.only(left: 10),
                                   height: 50,
                                   decoration:

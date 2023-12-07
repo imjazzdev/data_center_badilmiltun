@@ -84,9 +84,8 @@ class _HomePageState extends State<HomePage> {
                       margin: EdgeInsets.only(left: 20, right: 20, bottom: 20),
                       child: ListView.builder(
                         shrinkWrap: true,
-                        reverse: true,
                         physics: NeverScrollableScrollPhysics(),
-                        itemCount: (VarGlobal.list_jadwal_rapat.length - 17),
+                        itemCount: 3,
                         itemBuilder: (context, index) => Container(
                           padding: const EdgeInsets.all(10),
                           margin: const EdgeInsets.only(bottom: 20),

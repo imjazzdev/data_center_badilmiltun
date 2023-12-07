@@ -3,6 +3,7 @@ import 'package:data_center_badilmiltun/componen/card_shimmer.dart';
 import 'package:data_center_badilmiltun/componen/no_data_widget.dart';
 import 'package:data_center_badilmiltun/model/jadwal_rapat.dart';
 import 'package:data_center_badilmiltun/model/user_ratgas.dart';
+import 'package:data_center_badilmiltun/pages/jadwal_rapat_search.dart';
 import 'package:data_center_badilmiltun/utils/color_select.dart';
 import 'package:data_center_badilmiltun/utils/val_global.dart';
 import 'package:flutter/material.dart';
@@ -53,6 +54,18 @@ class _JadwalRapatPageState extends State<JadwalRapatPage> {
           actions: [
             IconButton(
                 onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => JadwalRapatSearch(),
+                      ));
+                },
+                icon: Icon(
+                  Icons.search,
+                  size: 28,
+                )),
+            IconButton(
+                onPressed: () {
                   AwesomeDialog(
                     context: context,
                     dialogType: DialogType.warning,
@@ -66,7 +79,7 @@ class _JadwalRapatPageState extends State<JadwalRapatPage> {
                         //       color: Colors.blue, fontWeight: FontWeight.bold),
                         // ),
                         Text(
-                          'Menampilkan 20 rapat terakhir, untuk lebih lengkapnya silahkan kunjungi website',
+                          'Menampilkan beberapa rapat kedepan, untuk lebih lengkapnya silahkan kunjungi website',
                           textAlign: TextAlign.center,
                           style: TextStyle(color: Colors.red.shade400),
                         ),
@@ -103,7 +116,6 @@ class _JadwalRapatPageState extends State<JadwalRapatPage> {
                     child: NoDataWidget(),
                   )
                 : ListView.builder(
-                    reverse: true,
                     padding: const EdgeInsets.only(
                         left: 20, right: 20, top: 20, bottom: 10),
                     itemCount: VarGlobal.list_jadwal_rapat.length,
