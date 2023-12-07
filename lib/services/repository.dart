@@ -21,6 +21,8 @@ class Repository {
   final _urlPostPengajuanCuti =
       'https://clone-eremis.djmt.id/pegawai/cuti/get_pegawai';
 
+  final _urlLogin = 'http://restapi.adequateshop.com/api/AuthAccount/Login';
+
   Future getPegawaiSedangCuti() async {
     try {
       final response = await http.get(Uri.parse(_urlGetPegawaiCuti));
@@ -97,5 +99,15 @@ class Repository {
     } catch (e) {
       print(e);
     }
+  }
+
+  Future login(String email, String password) async {
+    return http.post(Uri.parse(_urlPostPengajuanCuti),
+        headers: {'Content-Type': 'application/json; charset-UTF-8'},
+        body: jsonEncode({
+          'email' : email,
+          'password' : password
+        })
+        );
   }
 }

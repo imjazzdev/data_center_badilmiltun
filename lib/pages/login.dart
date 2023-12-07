@@ -1,3 +1,4 @@
+import 'package:data_center_badilmiltun/controller/login_controller.dart';
 import 'package:data_center_badilmiltun/pages/home.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -12,6 +13,9 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   bool _isObscure = true;
   String inkwell = '';
+
+  LoginController _controller = LoginController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -76,14 +80,15 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                   ),
                   TextField(
+                    controller: _controller.emailCon,
                     decoration: InputDecoration(
                         fillColor: Colors.lightBlue[50],
                         filled: true,
                         prefixIcon: Icon(Icons.person),
                         prefixStyle: TextStyle(
                             color: Colors.blue, fontWeight: FontWeight.w500),
-                        labelText: "ID",
-                        hintText: "no id",
+                        
+                        hintText: "Email",
                         border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(25))),
                     onChanged: (value) {
@@ -96,6 +101,7 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                   Container(
                     child: TextField(
+                      controller: _controller.passwordCon,
                       obscureText: _isObscure,
                       decoration: InputDecoration(
                           fillColor: Colors.lightBlue[50],
