@@ -101,13 +101,12 @@ class Repository {
     }
   }
 
-  Future login(String email, String password) async {
-    return http.post(Uri.parse(_urlPostPengajuanCuti),
-        headers: {'Content-Type': 'application/json; charset-UTF-8'},
-        body: jsonEncode({
-          'email' : email,
-          'password' : password
-        })
-        );
+  Future<http.Response> login(String email, String password) async {
+    return http.post(Uri.parse(_urlLogin),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8'
+        },
+        body:
+            jsonEncode(<String, String>{'email': email, 'password': password}));
   }
 }

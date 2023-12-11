@@ -1,7 +1,10 @@
 import 'package:data_center_badilmiltun/controller/login_controller.dart';
+import 'package:data_center_badilmiltun/model/login.dart';
+import 'package:data_center_badilmiltun/model/my_response.dart';
 import 'package:data_center_badilmiltun/pages/home.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -15,6 +18,25 @@ class _LoginPageState extends State<LoginPage> {
   String inkwell = '';
 
   LoginController _controller = LoginController();
+
+  void sessionCheck() async {
+    final prefs = await SharedPreferences.getInstance();
+    String? token = prefs.getString('token');
+    if (token != null) {
+      Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(
+            builder: (context) => HomePage(),
+          ),
+          (route) => false);
+    }
+  }
+
+  @override
+  void initState() {
+    //sessionCheck();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -37,22 +59,18 @@ class _LoginPageState extends State<LoginPage> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               ElevatedButton(
-                onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => HomePage(),
-                      ));
-                },
+                onPressed: login,
                 style: ElevatedButton.styleFrom(
                   primary: Color.fromARGB(255, 2, 60, 155),
                   fixedSize: const Size(100, 100),
                   shape: const CircleBorder(),
                 ),
-                child: const Text(
-                  'Log In',
-                  style: TextStyle(fontSize: 18),
-                ),
+                child: _controller.isLoading
+                    ? CircularProgressIndicator()
+                    : Text(
+                        'Log In',
+                        style: TextStyle(fontSize: 18),
+                      ),
               ),
             ],
           ),
@@ -87,13 +105,9 @@ class _LoginPageState extends State<LoginPage> {
                         prefixIcon: Icon(Icons.person),
                         prefixStyle: TextStyle(
                             color: Colors.blue, fontWeight: FontWeight.w500),
-                        
                         hintText: "Email",
                         border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(25))),
-                    onChanged: (value) {
-                      setState(() {});
-                    },
                   ),
                   SizedBox(
                     height: 10,
@@ -109,7 +123,6 @@ class _LoginPageState extends State<LoginPage> {
                           prefixIcon: Icon(Icons.lock),
                           prefixStyle: TextStyle(
                               color: Colors.blue, fontWeight: FontWeight.w500),
-                          labelText: "PASSWORD",
                           hintText: "password",
                           suffixIcon: IconButton(
                             icon: Icon(_isObscure
@@ -123,9 +136,6 @@ class _LoginPageState extends State<LoginPage> {
                           ),
                           border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(25))),
-                      onChanged: (value) {
-                        setState(() {});
-                      },
                     ),
                   ),
                 ]),
@@ -133,5 +143,27 @@ class _LoginPageState extends State<LoginPage> {
         ),
       ),
     ]));
+  }
+
+  void login() async {
+    // setState(() {
+    //   _controller.isLoading = true;
+    // });
+    MyResponse response = await _controller.login();
+    // setState(() {
+    //   _controller.isLoading = false;
+    // });
+
+    ScaffoldMessenger.of(context)
+        .showSnackBar(SnackBar(content: Text(response.massage)));
+
+    if (response.code == 0) {
+      // Navigator.pushAndRemoveUntil(
+      //     context,
+      //     MaterialPageRoute(
+      //       builder: (context) => HomePage(),
+      //     ),
+      //     (route) => false);
+    } else {}
   }
 }

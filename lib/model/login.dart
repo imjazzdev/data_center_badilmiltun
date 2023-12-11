@@ -1,17 +1,13 @@
-class Login {
-  final int id;
-  final String nama, email, token;
-  
-Login({required this.id, required this.nama, required this.email, required this.token});
-  factory Login.fromJson(Map<String, dynamic> json) {
-    return Login(
-      id: json['id'],
-        nama: json['nama'].toString(),
-        email: json['email'],
-        token: json['token']
-        
-        );
-  }
+class UserLogin {
+  int id;
+  String name, email, token;
 
-  
+  UserLogin({this.id = 0, this.name = '', this.email = '', this.token = ''});
+  factory UserLogin.fromJson(Map<String, dynamic> json) {
+    return UserLogin(
+        id: json['Id'],
+        name: json['Name'],
+        email: json['Email'],
+        token: json['Token']);
+  }
 }

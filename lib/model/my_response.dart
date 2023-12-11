@@ -9,7 +9,7 @@ class MyResponse<T> {
       Map<String, dynamic> json, Function fromJsonModel) {
     return MyResponse(
         code: json['code'],
-        massage: json['massage'],
-        data: fromJsonModel(json['data']));
+        massage: json['message'],
+        data: (json['data'] != null) ? fromJsonModel(json['data']) : null);
   }
 }
