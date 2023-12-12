@@ -73,7 +73,7 @@ class _JadwalRapatSearchState extends State<JadwalRapatSearch> {
                             children: [
                               Text(
                                   DateFormat('dd-MM-yyyy')
-                                      .format(_dateTimeStart as DateTime)
+                                      .format(_dateTimeStart!)
                                       .toString(),
                                   style: TextStyle(fontSize: 16)),
                               Icon(

@@ -2,6 +2,7 @@ import 'package:data_center_badilmiltun/controller/login_controller.dart';
 import 'package:data_center_badilmiltun/model/login.dart';
 import 'package:data_center_badilmiltun/model/my_response.dart';
 import 'package:data_center_badilmiltun/pages/home.dart';
+import 'package:data_center_badilmiltun/utils/color_select.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -34,7 +35,7 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   void initState() {
-    //sessionCheck();
+    sessionCheck();
     super.initState();
   }
 
@@ -146,24 +147,26 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   void login() async {
-    // setState(() {
-    //   _controller.isLoading = true;
-    // });
+    setState(() {
+      _controller.isLoading = true;
+    });
     MyResponse response = await _controller.login();
-    // setState(() {
-    //   _controller.isLoading = false;
-    // });
-
-    ScaffoldMessenger.of(context)
-        .showSnackBar(SnackBar(content: Text(response.massage)));
+    setState(() {
+      _controller.isLoading = false;
+    });
 
     if (response.code == 0) {
-      // Navigator.pushAndRemoveUntil(
-      //     context,
-      //     MaterialPageRoute(
-      //       builder: (context) => HomePage(),
-      //     ),
-      //     (route) => false);
-    } else {}
+      Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(
+            builder: (context) => HomePage(),
+          ),
+          (route) => false);
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text('Terjadi kesalahan, coba lagi.'),
+        backgroundColor: Colors.red,
+      ));
+    }
   }
 }

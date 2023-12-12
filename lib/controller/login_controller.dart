@@ -20,37 +20,31 @@ class LoginController {
 
     // print('STATUS CODE : ${result.statusCode}');
 
-    Map<String, dynamic> myBody = jsonDecode(result.body);
-    print('RESULT BODY : ${myBody}');
+    // Map<String, dynamic> myBody = jsonDecode(result.body);
+    // print('RESULT BODY : ${myBody}');
 
-    MyResponse<UserLogin> myResponse =
-        MyResponse.fromJson(myBody, UserLogin.fromJson);
+    // MyResponse<UserLogin> myResponse =
+    //     MyResponse.fromJson(myBody, UserLogin.fromJson);
 
-    debugPrint('MY RESPON MASSAGE : ${myResponse.massage}');
+    // debugPrint('MY RESPON MASSAGE : ${myResponse.massage}');
 
-    // if (result.statusCode == 200) {
-    //   Map<String, dynamic> myBody = jsonDecode(result.body);
-    //   print('RESULT BODY : ${myBody}');
+    if (result.statusCode == 200) {
+      Map<String, dynamic> myBody = jsonDecode(result.body);
+      print('RESULT BODY : ${myBody}');
 
-    //   MyResponse<UserLogin> myResponse =
-    //       MyResponse.fromJson(myBody, UserLogin.fromJson);
+      MyResponse<UserLogin> myResponse =
+          MyResponse.fromJson(myBody, UserLogin.fromJson);
+      debugPrint('MY RESPON MASSAGE : ${myResponse.massage}');
 
-    //   print('PESAN CODE : ${myResponse.code}');
-    //   print('PESAN MASSAGE : ${myResponse.massage}');
-    //   print('PESAN MYRESPONSE : ${myResponse.data}');
-    //   debugPrint('MY RESPON MASSAGE : ${myResponse.massage}');
+      if (myResponse.code == null) {
+        final prefs = await SharedPreferences.getInstance();
+        //simpan token
+        await prefs.setString('token', myBody['token'] ?? '');
+      }
 
-    //   if (myResponse.code == null) {
-    //     final prefs = await SharedPreferences.getInstance();
-    //     print('');
-
-    //     //simpan token
-    //     await prefs.setString('token', myBody['token'] ?? '');
-    //   }
-
-    return myResponse;
-    // } else {
-    //   return MyResponse(code: 1, massage: 'Terjadi kesalahan, coba lagi');
-    // }
+      return myResponse;
+    } else {
+      return MyResponse(code: 1, massage: 'Terjadi kesalahan, coba lagi');
+    }
   }
 }
