@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "273320517649",
+    "project_id": "tesbadil-6124a",
+    "storage_bucket": "tesbadil-6124a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:273320517649:android:492dc4ea7864d55051d1b0",
+        "android_client_info": {
+          "package_name": "com.example.data_center_badilmiltun"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDo2lybv84MMEqIuS0D9BXQlfYZcXfSMS0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

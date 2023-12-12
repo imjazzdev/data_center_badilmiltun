@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:data_center_badilmiltun/model/pengajuan_cuti.dart';
+
 import 'package:data_center_badilmiltun/utils/color_select.dart';
 import 'package:data_center_badilmiltun/utils/var_global.dart';
 import 'package:flutter/material.dart';
@@ -92,18 +93,46 @@ class _CutiPengajuanPageState extends State<CutiPengajuanPage> {
     'CUTI MELAHIRKAN',
     'CUTI KARENA ALASAN PENTING'
   ];
+  DateTime _dateMulai = DateTime.now();
+  DateTime _dateSelesai = DateTime.now();
   DateTime _dateTime = DateTime.now();
   void _showDate() {
     showDatePicker(
-        context: context,
-        initialDate: DateTime.now(),
-        firstDate: DateTime(2000),
-        lastDate: DateTime(2050))
-      ..then((value) {
-        setState(() {
-          _dateTime = value!;
-        });
+            context: context,
+            initialDate: DateTime.now(),
+            firstDate: DateTime(1),
+            lastDate: DateTime(2050))
+        .then((value) {
+      setState(() {
+        _dateTime = value!;
       });
+    });
+  }
+
+  void _showDateMulai() {
+    showDatePicker(
+            context: context,
+            initialDate: DateTime.now(),
+            firstDate: DateTime(2000),
+            lastDate: DateTime(2050))
+        .then((value) {
+      setState(() {
+        _dateMulai = value!;
+      });
+    });
+  }
+
+  void _showDateSelesai() {
+    showDatePicker(
+            context: context,
+            initialDate: DateTime.now(),
+            firstDate: DateTime(2000),
+            lastDate: DateTime(2050))
+        .then((value) {
+      setState(() {
+        _dateSelesai = value!;
+      });
+    });
   }
 
   @override
@@ -214,12 +243,14 @@ class _CutiPengajuanPageState extends State<CutiPengajuanPage> {
                           padding: EdgeInsets.only(left: 10),
                           height: 50,
                           decoration: BoxDecoration(border: Border.all()),
-                          child: TextField(
-                            decoration: InputDecoration(
-                              border: OutlineInputBorder(),
-                              hintText: "dd - mm - yyyy",
+                          child: MaterialButton(
+                            onPressed: _showDate,
+                            child: Text(
+                              DateFormat('dd-MM-yyyy')
+                                  .format(_dateTime)
+                                  .toString(),
+                              style: TextStyle(fontSize: 18),
                             ),
-                            controller: tglPengajuanCuti,
                           ),
                         ),
                       ),
@@ -308,10 +339,12 @@ class _CutiPengajuanPageState extends State<CutiPengajuanPage> {
                               flex: 2,
                               child: Container(
                                 child: MaterialButton(
-                                  onPressed: _showDate,
+                                  onPressed: _showDateMulai,
                                   child: Text(
-                                    _dateTime.toString(),
-                                    style: TextStyle(fontSize: 5),
+                                    DateFormat('dd-MM-yyyy')
+                                        .format(_dateMulai)
+                                        .toString(),
+                                    style: TextStyle(fontSize: 12),
                                   ),
                                 ),
                                 padding: EdgeInsets.only(left: 10),
@@ -329,6 +362,15 @@ class _CutiPengajuanPageState extends State<CutiPengajuanPage> {
                             Expanded(
                               flex: 2,
                               child: Container(
+                                child: MaterialButton(
+                                  onPressed: _showDateSelesai,
+                                  child: Text(
+                                    DateFormat('dd-MM-yyyy')
+                                        .format(_dateSelesai)
+                                        .toString(),
+                                    style: TextStyle(fontSize: 12),
+                                  ),
+                                ),
                                 padding: EdgeInsets.only(left: 10),
                                 height: 50,
                                 decoration: BoxDecoration(border: Border.all()),
@@ -349,7 +391,9 @@ class _CutiPengajuanPageState extends State<CutiPengajuanPage> {
                         height: 50,
                         decoration: BoxDecoration(border: Border.all()),
                         child: TextField(
-                          decoration: InputDecoration(border: InputBorder.none),
+                          decoration: InputDecoration(
+                              border: InputBorder.none,
+                              hintText: "jumlah hari"),
                           controller: lamaCuti,
                         ),
                       ),
@@ -469,8 +513,9 @@ class _CutiPengajuanPageState extends State<CutiPengajuanPage> {
               // String id_pejabat = "2";
               // String id_mengetahui = "2";
 
-              String id_user = "41";
-              String tanggal_pengajuan_cuti = tglPengajuanCuti.text;
+              String id_user = "100";
+              String tanggal_pengajuan_cuti =
+                  DateFormat('dd-MM-yyyy').format(_dateTime).toString();
               String cuti_nama = "as";
               String cuti_nip = "08978676656";
               String cuti_jabatan = "tes";
@@ -480,8 +525,10 @@ class _CutiPengajuanPageState extends State<CutiPengajuanPage> {
               String alasan_cuti = alasanCuti.text;
               String lama_cuti = lamaCuti.text;
               String ket_lama_cuti = "2";
-              String mulai_cuti = "08-12-2023";
-              String selesai_cuti = "09-12-2023";
+              String mulai_cuti =
+                  DateFormat('dd-MM-yyyy').format(_dateMulai).toString();
+              String selesai_cuti =
+                  DateFormat('dd-MM-yyyy').format(_dateSelesai).toString();
               String alamat_cuti = alamatSaatMenjalankanCuti.text;
               String id_atasan = atasanLangsung.text;
               String id_pejabat = pejabatBerwenang.text;
