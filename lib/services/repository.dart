@@ -23,6 +23,8 @@ class Repository {
 
   final _urlLogin = 'http://restapi.adequateshop.com/api/AuthAccount/Login';
 
+  final _urlLoginNew = 'https://clone-eremis.djmt.id/dashboard/login_app';
+
   Future getPegawaiSedangCuti() async {
     try {
       final response = await http.get(Uri.parse(_urlGetPegawaiCuti));
@@ -102,11 +104,11 @@ class Repository {
   }
 
   Future<http.Response> login(String email, String password) async {
-    return http.post(Uri.parse(_urlLogin),
+    return http.post(Uri.parse(_urlLoginNew),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8'
         },
-        body:
-            jsonEncode(<String, String>{'email': email, 'password': password}));
+        body: jsonEncode(
+            <String, String>{'username': email, 'password': password}));
   }
 }

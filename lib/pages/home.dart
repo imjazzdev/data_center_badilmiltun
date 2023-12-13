@@ -1,3 +1,4 @@
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:data_center_badilmiltun/componen/card_shimmer.dart';
 import 'package:data_center_badilmiltun/componen/carousel_banner.dart';
 import 'package:data_center_badilmiltun/componen/menu_category.dart';
@@ -87,92 +88,145 @@ class _HomePageState extends State<HomePage> {
                         shrinkWrap: true,
                         physics: NeverScrollableScrollPhysics(),
                         itemCount: 3,
-                        itemBuilder: (context, index) => Container(
-                          padding: const EdgeInsets.all(10),
-                          margin: const EdgeInsets.only(bottom: 20),
-                          height: 120,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(20),
-                              color: Colors.white,
-                              boxShadow: [
-                                BoxShadow(
-                                    color:
-                                        Colors.blue.shade300.withOpacity(0.2),
-                                    blurRadius: 3,
-                                    offset: Offset(3, 3),
-                                    spreadRadius: 3)
-                              ]),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              Flexible(
-                                flex: 3,
-                                child: Container(
-                                    height: 85,
-                                    width: 85,
-                                    decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(15),
-                                        color: Colors.grey.shade100),
-                                    child: Image.asset('assets/rapat.png')),
+                        itemBuilder: (context, index) => InkWell(
+                          onTap: () {
+                            AwesomeDialog(
+                              context: context,
+                              dialogType: DialogType.info,
+                              animType: AnimType.rightSlide,
+                              body: Column(
+                                children: [
+                                  Text(
+                                    'Rapat',
+                                    style: TextStyle(
+                                        color: Colors.blue,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                  Text(
+                                    VarGlobal.list_jadwal_rapat[index].title,
+                                    textAlign: TextAlign.center,
+                                  ),
+                                  Text(
+                                    'Tempat',
+                                    style: TextStyle(
+                                        color: Colors.blue,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                  Text(
+                                    VarGlobal.list_jadwal_rapat[index].tempat,
+                                  ),
+                                  Text(
+                                    'Tanggal',
+                                    style: TextStyle(
+                                        color: Colors.blue,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                  Text(
+                                    VarGlobal.list_jadwal_rapat[index].tanggal,
+                                  ),
+                                  Text(
+                                    'Pukul',
+                                    style: TextStyle(
+                                        color: Colors.blue,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                  Text(
+                                    VarGlobal.list_jadwal_rapat[index].pukul,
+                                  ),
+                                ],
                               ),
-                              Flexible(
-                                flex: 1,
-                                child: SizedBox(
-                                  width: 15,
+                              btnOkOnPress: () {},
+                            ).show();
+                          },
+                          child: Container(
+                            padding: const EdgeInsets.all(10),
+                            margin: const EdgeInsets.only(bottom: 20),
+                            height: 120,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(20),
+                                color: Colors.white,
+                                boxShadow: [
+                                  BoxShadow(
+                                      color:
+                                          Colors.blue.shade300.withOpacity(0.2),
+                                      blurRadius: 3,
+                                      offset: Offset(3, 3),
+                                      spreadRadius: 3)
+                                ]),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Flexible(
+                                  flex: 3,
+                                  child: Container(
+                                      height: 85,
+                                      width: 85,
+                                      decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(15),
+                                          color: Colors.grey.shade100),
+                                      child: Image.asset('assets/rapat.png')),
                                 ),
-                              ),
-                              Flexible(
-                                flex: 8,
-                                child: Container(
-                                  child: Column(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceEvenly,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Expanded(
-                                        child: Text(
-                                          VarGlobal
-                                              .list_jadwal_rapat[index].title,
-                                          overflow: TextOverflow.ellipsis,
-                                          maxLines: 1,
-                                          style: TextStyle(
-                                              fontSize: 16,
-                                              fontWeight: FontWeight.bold,
-                                              color: ColorSelect.blue),
-                                        ),
-                                      ),
-                                      Expanded(
-                                        child: Text(
-                                            VarGlobal.list_jadwal_rapat[index]
-                                                .tanggal,
-                                            textAlign: TextAlign.center,
+                                Flexible(
+                                  flex: 1,
+                                  child: SizedBox(
+                                    width: 15,
+                                  ),
+                                ),
+                                Flexible(
+                                  flex: 8,
+                                  child: Container(
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceEvenly,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Expanded(
+                                          child: Text(
+                                            VarGlobal
+                                                .list_jadwal_rapat[index].title,
+                                            overflow: TextOverflow.ellipsis,
+                                            maxLines: 1,
                                             style: TextStyle(
-                                                fontSize: 14,
-                                                color: Colors.grey,
-                                                fontWeight: FontWeight.bold)),
-                                      ),
-                                      Expanded(
-                                        child: Container(
-                                          padding: EdgeInsets.all(7),
-                                          decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(10),
-                                              color: Colors.blue.shade50),
+                                                fontSize: 16,
+                                                fontWeight: FontWeight.bold,
+                                                color: ColorSelect.blue),
+                                          ),
+                                        ),
+                                        Expanded(
                                           child: Text(
                                               VarGlobal.list_jadwal_rapat[index]
-                                                  .pukul,
+                                                  .tanggal,
                                               textAlign: TextAlign.center,
                                               style: TextStyle(
                                                   fontSize: 14,
-                                                  color: ColorSelect.blue)),
+                                                  color: Colors.grey,
+                                                  fontWeight: FontWeight.bold)),
                                         ),
-                                      )
-                                    ],
+                                        Expanded(
+                                          child: Container(
+                                            padding: EdgeInsets.all(7),
+                                            decoration: BoxDecoration(
+                                                borderRadius:
+                                                    BorderRadius.circular(10),
+                                                color: Colors.blue.shade50),
+                                            child: Text(
+                                                VarGlobal
+                                                    .list_jadwal_rapat[index]
+                                                    .pukul,
+                                                textAlign: TextAlign.center,
+                                                style: TextStyle(
+                                                    fontSize: 14,
+                                                    color: ColorSelect.blue)),
+                                          ),
+                                        )
+                                      ],
+                                    ),
                                   ),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
                         ),
                       ))

@@ -10,8 +10,8 @@ import '../model/login.dart';
 
 class LoginController {
   Repository repository = Repository();
-  var emailCon = TextEditingController(text: 'izaaz@gmail.com');
-  var passwordCon = TextEditingController(text: '123');
+  var emailCon = TextEditingController(text: '199612112020121005');
+  var passwordCon = TextEditingController(text: '199612112020121005!@#');
   bool isLoading = false;
 
   Future<MyResponse> login() async {
@@ -27,7 +27,7 @@ class LoginController {
     //     MyResponse.fromJson(myBody, UserLogin.fromJson);
 
     // debugPrint('MY RESPON MASSAGE : ${myResponse.massage}');
-
+    print(result.statusCode);
     if (result.statusCode == 200) {
       Map<String, dynamic> myBody = jsonDecode(result.body);
       print('RESULT BODY : ${myBody}');
@@ -36,11 +36,11 @@ class LoginController {
           MyResponse.fromJson(myBody, UserLogin.fromJson);
       debugPrint('MY RESPON MASSAGE : ${myResponse.massage}');
 
-      if (myResponse.code == null) {
-        final prefs = await SharedPreferences.getInstance();
-        //simpan token
-        await prefs.setString('token', myBody['token'] ?? '');
-      }
+      // if (myResponse.code == null) {
+      //   final prefs = await SharedPreferences.getInstance();
+      //   //simpan token
+      //   await prefs.setString('token', myBody['token'] ?? '');
+      // }
 
       return myResponse;
     } else {
