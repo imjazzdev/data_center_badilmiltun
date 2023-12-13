@@ -15,7 +15,7 @@ class CutiPegawaiYangSedangCuti extends StatefulWidget {
 
 class _CutiPegawaiYangSedangCutiState extends State<CutiPegawaiYangSedangCuti> {
   bool isDataReady = false;
-  List<PegawaiCuti> list_pegawai_cuti = [];
+  List list_pegawai_cuti = [];
   Repository repository = Repository();
 
   getData() async {

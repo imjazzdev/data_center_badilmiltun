@@ -1,3 +1,7 @@
+// import 'package:data_center_badilmiltun/pages/home.dart';
+import 'package:data_center_badilmiltun/pages/start.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:data_center_badilmiltun/pages/home.dart';
 import 'package:data_center_badilmiltun/pages/login.dart';
 import 'package:data_center_badilmiltun/pages/start.dart';
@@ -27,7 +31,7 @@ class MyApp extends StatelessWidget {
             backgroundColor: ColorSelect.blue.withOpacity(0.8),
             elevation: 0,
           )),
-      home: const LoginPage(),
+      home: const StartPage(),
     );
   }
 }

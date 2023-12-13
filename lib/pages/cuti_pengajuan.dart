@@ -1,21 +1,87 @@
-import 'package:data_center_badilmiltun/services/repository.dart';
+import 'dart:async';
+import 'dart:convert';
+
+import 'package:data_center_badilmiltun/model/pengajuan_cuti.dart';
+
 import 'package:data_center_badilmiltun/utils/color_select.dart';
+import 'package:data_center_badilmiltun/utils/var_global.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 
 class CutiPengajuanPage extends StatefulWidget {
-  const CutiPengajuanPage({super.key});
+  const CutiPengajuanPage({Key? key}) : super(key: key);
 
   @override
   State<CutiPengajuanPage> createState() => _CutiPengajuanPageState();
 }
 
+Future<PengajuanCuti> submitData(
+    String id_user,
+    String tanggal_pengajuan_cuti,
+    String cuti_nama,
+    String cuti_nip,
+    String cuti_jabatan,
+    String cuti_masa_kerja,
+    String cuti_unit_kerja,
+    String jenis_cuti,
+    String alasan_cuti,
+    String lama_cuti,
+    String ket_lama_cuti,
+    String mulai_cuti,
+    String selesai_cuti,
+    String alamat_cuti,
+    String id_atasan,
+    String id_pejabat,
+    String id_mengetahui) async {
+  var response = await http.post(
+    Uri.https('clone-eremis.djmt.id', '/pegawai/cuti/tambah_data'),
+    body: {
+      "id_user": id_user,
+      "tanggal_pengajuan_cuti": tanggal_pengajuan_cuti,
+      "cuti_nama": cuti_nama,
+      "cuti_nip": cuti_nip,
+      "cuti_jabatan": cuti_jabatan,
+      "cuti_masa_kerja": cuti_masa_kerja,
+      "cuti_unit_kerja": cuti_unit_kerja,
+      "jenis_cuti": jenis_cuti,
+      "alasan_cuti": alasan_cuti,
+      "lama_cuti": lama_cuti,
+      "ket_lama_cuti": ket_lama_cuti,
+      "mulai_cuti": mulai_cuti,
+      "selesai_cuti": selesai_cuti,
+      "alamat_cuti": alamat_cuti,
+      "id_atasan": id_atasan,
+      "id_pejabat": id_pejabat,
+      "id_mengetahui": id_mengetahui
+    },
+  );
+
+  // var response = await http.post(
+  //     Uri.https('https://clone-eremis.djmt.id/pegawai/cuti/tambah'),
+  // body: {""});
+  // var data = response.body;
+
+  VarGlobal.pesanSnackBar = jsonDecode(response.body)['message'];
+  // print('PRINT MASSAGE : ${data}');
+
+  if (response.statusCode == 200) {
+    String responseString = response.body;
+    print(responseString);
+    return pengajuanCutiFromJson(responseString);
+  } else {
+    return null!;
+  }
+}
+
 class _CutiPengajuanPageState extends State<CutiPengajuanPage> {
+  late PengajuanCuti _dataModel;
   TextEditingController alasanCuti =
       TextEditingController(text: 'Keperluan keluarga');
   TextEditingController alamatSaatMenjalankanCuti =
       TextEditingController(text: 'Jakarta');
   TextEditingController lamaCuti = TextEditingController();
+  TextEditingController tglPengajuanCuti = TextEditingController();
   TextEditingController atasanLangsung = TextEditingController();
   TextEditingController pejabatBerwenang = TextEditingController();
 
@@ -27,31 +93,46 @@ class _CutiPengajuanPageState extends State<CutiPengajuanPage> {
     'CUTI MELAHIRKAN',
     'CUTI KARENA ALASAN PENTING'
   ];
-
-  String? valAtasanLangsung =
-      'Jefri Ardianto, S.T., M.M. (Kabag Organisasi dan Tata Laksana Sekretariat)';
-  List<String> atasan_langsung = [
-    'Jefri Ardianto, S.T., M.M. (Kabag Organisasi dan Tata Laksana Sekretariat)',
-  ];
-
-  String? valPejabatBerwenang =
-      'Jefri Ardianto, S.T., M.M. (Kabag Organisasi dan Tata Laksana Sekretariat)';
-  List<String> pejabat_berwenang = [
-    'Jefri Ardianto, S.T., M.M. (Kabag Organisasi dan Tata Laksana Sekretariat)',
-  ];
-
-  DateTime? _dateTime;
-
-  Repository repository = Repository();
-
-  getPost() async {
-    bool response = await repository.postPengajuanCuti();
+  DateTime _dateMulai = DateTime.now();
+  DateTime _dateSelesai = DateTime.now();
+  DateTime _dateTime = DateTime.now();
+  void _showDate() {
+    showDatePicker(
+            context: context,
+            initialDate: DateTime.now(),
+            firstDate: DateTime(1),
+            lastDate: DateTime(2050))
+        .then((value) {
+      setState(() {
+        _dateTime = value!;
+      });
+    });
   }
 
-  @override
-  void initState() {
-    getPost();
-    super.initState();
+  void _showDateMulai() {
+    showDatePicker(
+            context: context,
+            initialDate: DateTime.now(),
+            firstDate: DateTime(2000),
+            lastDate: DateTime(2050))
+        .then((value) {
+      setState(() {
+        _dateMulai = value!;
+      });
+    });
+  }
+
+  void _showDateSelesai() {
+    showDatePicker(
+            context: context,
+            initialDate: DateTime.now(),
+            firstDate: DateTime(2000),
+            lastDate: DateTime(2050))
+        .then((value) {
+      setState(() {
+        _dateSelesai = value!;
+      });
+    });
   }
 
   @override
@@ -154,24 +235,47 @@ class _CutiPengajuanPageState extends State<CutiPengajuanPage> {
                     TableRow(children: [
                       Padding(
                         padding: const EdgeInsets.only(bottom: 10),
-                        child: Text('Tgl Pengajuan Cuti',
-                            style: TextStyle(
-                              fontSize: 14,
-                            )),
+                        child: Text('Tgl Pengajuan Cuti'),
                       ),
-                      Container(
-                        margin: EdgeInsets.only(bottom: 10),
-                        padding: EdgeInsets.only(left: 10),
-                        alignment: Alignment.centerLeft,
-                        height: 50,
-                        decoration: BoxDecoration(border: Border.all()),
-                        child: Text(
-                            DateFormat("dd-MM-yyyy").format(DateTime.now()),
-                            style: TextStyle(
-                              fontSize: 16,
-                            )),
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 10),
+                        child: Container(
+                          padding: EdgeInsets.only(left: 10),
+                          height: 50,
+                          decoration: BoxDecoration(border: Border.all()),
+                          child: MaterialButton(
+                            onPressed: _showDate,
+                            child: Text(
+                              DateFormat('dd-MM-yyyy')
+                                  .format(_dateTime)
+                                  .toString(),
+                              style: TextStyle(fontSize: 18),
+                            ),
+                          ),
+                        ),
                       ),
                     ]),
+                    // TableRow(children: [
+                    //   Padding(
+                    //     padding: const EdgeInsets.only(bottom: 10),
+                    //     child: Text('Tgl Pengajuan Cuti',
+                    //         style: TextStyle(
+                    //           fontSize: 14,
+                    //         )),
+                    //   ),
+                    //   Container(
+                    //     margin: EdgeInsets.only(bottom: 10),
+                    //     padding: EdgeInsets.only(left: 10),
+                    //     alignment: Alignment.centerLeft,
+                    //     height: 50,
+                    //     decoration: BoxDecoration(border: Border.all()),
+                    //     child: Text(
+                    //         DateFormat("dd-MM-yyyy").format(DateTime.now()),
+                    //         style: TextStyle(
+                    //           fontSize: 16,
+                    //         )),
+                    //   ),
+                    // ]),
                     TableRow(children: [
                       Padding(
                         padding: const EdgeInsets.only(bottom: 10),
@@ -233,28 +337,19 @@ class _CutiPengajuanPageState extends State<CutiPengajuanPage> {
                           children: [
                             Expanded(
                               flex: 2,
-                              child: InkWell(
-                                onTap: () {
-                                  showDatePicker(
-                                    context: context,
-                                    initialDate: DateTime.now(),
-                                    firstDate: DateTime(2000),
-                                    lastDate: DateTime(2099),
-                                  ).then((date) {
-                                    //tambahkan setState dan panggil variabel _dateTime.
-                                    setState(() {
-                                      _dateTime = date;
-                                    });
-                                  });
-                                },
-                                child: Container(
-                                  alignment: Alignment.center,
-                                  padding: EdgeInsets.only(left: 10),
-                                  height: 50,
-                                  decoration:
-                                      BoxDecoration(border: Border.all()),
-                                  child: Text(_dateTime.toString()),
+                              child: Container(
+                                child: MaterialButton(
+                                  onPressed: _showDateMulai,
+                                  child: Text(
+                                    DateFormat('dd-MM-yyyy')
+                                        .format(_dateMulai)
+                                        .toString(),
+                                    style: TextStyle(fontSize: 12),
+                                  ),
                                 ),
+                                padding: EdgeInsets.only(left: 10),
+                                height: 50,
+                                decoration: BoxDecoration(border: Border.all()),
                               ),
                             ),
                             Expanded(
@@ -267,6 +362,15 @@ class _CutiPengajuanPageState extends State<CutiPengajuanPage> {
                             Expanded(
                               flex: 2,
                               child: Container(
+                                child: MaterialButton(
+                                  onPressed: _showDateSelesai,
+                                  child: Text(
+                                    DateFormat('dd-MM-yyyy')
+                                        .format(_dateSelesai)
+                                        .toString(),
+                                    style: TextStyle(fontSize: 12),
+                                  ),
+                                ),
                                 padding: EdgeInsets.only(left: 10),
                                 height: 50,
                                 decoration: BoxDecoration(border: Border.all()),
@@ -287,7 +391,9 @@ class _CutiPengajuanPageState extends State<CutiPengajuanPage> {
                         height: 50,
                         decoration: BoxDecoration(border: Border.all()),
                         child: TextField(
-                          decoration: InputDecoration(border: InputBorder.none),
+                          decoration: InputDecoration(
+                              border: InputBorder.none,
+                              hintText: "jumlah hari"),
                           controller: lamaCuti,
                         ),
                       ),
@@ -338,68 +444,36 @@ class _CutiPengajuanPageState extends State<CutiPengajuanPage> {
                         padding: const EdgeInsets.only(bottom: 10),
                         child: Text('Atasan Lansung'),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.only(bottom: 10),
-                        child: Container(
-                          padding: EdgeInsets.only(left: 10),
-                          decoration: BoxDecoration(border: Border.all()),
-                          child: DropdownButton(
-                            hint: Text("Select Status"),
-                            underline: SizedBox(),
-                            isExpanded: true,
-                            value: valAtasanLangsung,
-                            items: atasan_langsung.map((value) {
-                              return DropdownMenuItem(
-                                child: Text(
-                                  value,
-                                  overflow: TextOverflow.ellipsis,
-                                ),
-                                value: value,
-                              );
-                            }).toList(),
-                            onChanged: (value) {
-                              setState(() {
-                                valAtasanLangsung = value;
-                              });
-                            },
-                          ),
+                      Container(
+                        margin: EdgeInsets.only(bottom: 10),
+                        padding: EdgeInsets.only(left: 10),
+                        height: 50,
+                        decoration: BoxDecoration(
+                          border: Border.all(),
                         ),
-                      )
+                        child: TextField(
+                          decoration: InputDecoration(border: InputBorder.none),
+                          controller: atasanLangsung,
+                        ),
+                      ),
                     ]),
                     TableRow(children: [
                       Padding(
                         padding: const EdgeInsets.only(bottom: 10),
                         child: Text('Pejabat yang berwenang'),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.only(bottom: 10),
-                        child: Container(
-                          padding: EdgeInsets.only(left: 10),
-                          decoration: BoxDecoration(border: Border.all()),
-                          child: DropdownButton(
-                            hint: Text(
-                              "Select Status",
-                            ),
-                            underline: SizedBox(),
-                            isExpanded: true,
-                            value: valPejabatBerwenang,
-                            items: pejabat_berwenang.map((value) {
-                              return DropdownMenuItem(
-                                child: Text(
-                                  value,
-                                  overflow: TextOverflow.ellipsis,
-                                ),
-                                value: value,
-                              );
-                            }).toList(),
-                            onChanged: (value) {
-                              setState(() {
-                                valPejabatBerwenang = value;
-                              });
-                            },
-                          ),
+                      Container(
+                        margin: EdgeInsets.only(bottom: 10),
+                        padding: EdgeInsets.only(left: 10),
+                        height: 50,
+                        decoration: BoxDecoration(
+                          border: Border.all(),
                         ),
-                      )
+                        child: TextField(
+                          decoration: InputDecoration(border: InputBorder.none),
+                          controller: pejabatBerwenang,
+                        ),
+                      ),
                     ]),
                   ],
                 )
@@ -410,20 +484,93 @@ class _CutiPengajuanPageState extends State<CutiPengajuanPage> {
             height: 20,
           ),
           ElevatedButton(
-              onPressed: () {},
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Icon(Icons.check),
-                  SizedBox(
-                    width: 5,
-                  ),
-                  Text(
-                    'Save',
-                    style: TextStyle(fontWeight: FontWeight.bold),
-                  ),
-                ],
-              )),
+            child: Text('SAVE'),
+            onPressed: () async {
+              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                content: Text(VarGlobal.pesanSnackBar),
+                action: SnackBarAction(
+                  label: 'oke',
+                  onPressed: () {
+                    // Code to execute.
+                  },
+                ),
+              ));
+              // String id_user = "60";
+              // String tanggal_pengajuan_cuti = "22";
+              // String cuti_nama = "as";
+              // String cuti_nip = "08978676656";
+              // String cuti_jabatan = "tes";
+              // String cuti_masa_kerja = "1";
+              // String cuti_unit_kerja = "sa";
+              // String jenis_cuti = "CUTI TAHUNAN";
+              // String alasan_cuti = "sa";
+              // String lama_cuti = "2";
+              // String ket_lama_cuti = "2";
+              // String mulai_cuti = "08-12-2023";
+              // String selesai_cuti = "09-12-2023";
+              // String alamat_cuti = "da";
+              // String id_atasan = "2";
+              // String id_pejabat = "2";
+              // String id_mengetahui = "2";
+
+              String id_user = "100";
+              String tanggal_pengajuan_cuti =
+                  DateFormat('dd-MM-yyyy').format(_dateTime).toString();
+              String cuti_nama = "as";
+              String cuti_nip = "08978676656";
+              String cuti_jabatan = "tes";
+              String cuti_masa_kerja = "1";
+              String cuti_unit_kerja = "sa";
+              String jenis_cuti = "CUTI TAHUNAN";
+              String alasan_cuti = alasanCuti.text;
+              String lama_cuti = lamaCuti.text;
+              String ket_lama_cuti = "2";
+              String mulai_cuti =
+                  DateFormat('dd-MM-yyyy').format(_dateMulai).toString();
+              String selesai_cuti =
+                  DateFormat('dd-MM-yyyy').format(_dateSelesai).toString();
+              String alamat_cuti = alamatSaatMenjalankanCuti.text;
+              String id_atasan = atasanLangsung.text;
+              String id_pejabat = pejabatBerwenang.text;
+              String id_mengetahui = "2";
+
+              PengajuanCuti? data = await submitData(
+                  id_user,
+                  tanggal_pengajuan_cuti,
+                  cuti_nama,
+                  cuti_nip,
+                  cuti_jabatan,
+                  cuti_masa_kerja,
+                  cuti_unit_kerja,
+                  jenis_cuti,
+                  alasan_cuti,
+                  lama_cuti,
+                  ket_lama_cuti,
+                  mulai_cuti,
+                  selesai_cuti,
+                  alamat_cuti,
+                  id_atasan,
+                  id_pejabat,
+                  id_mengetahui);
+
+              setState(() {
+                _dataModel = data!;
+              });
+            },
+            // child: Row(
+            //   mainAxisAlignment: MainAxisAlignment.center,
+            //   children: [
+            //     Icon(Icons.check),
+            //     SizedBox(
+            //       width: 5,
+            //     ),
+            //     Text(
+            //       'Save',
+            //       style: TextStyle(fontWeight: FontWeight.bold),
+            //     ),
+            //   ],
+            // )
+          ),
           SizedBox(
             height: 20,
           ),

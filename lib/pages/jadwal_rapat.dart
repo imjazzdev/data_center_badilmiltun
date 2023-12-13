@@ -20,7 +20,6 @@ class JadwalRapatPage extends StatefulWidget {
 
 class _JadwalRapatPageState extends State<JadwalRapatPage> {
   bool isDataReady = false;
-
   // List list_jadwal_terdekat = [];
   Repository repository = Repository();
 
