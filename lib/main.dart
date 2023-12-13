@@ -2,17 +2,16 @@
 import 'package:data_center_badilmiltun/pages/start.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:data_center_badilmiltun/pages/home.dart';
+import 'package:data_center_badilmiltun/pages/login.dart';
+import 'package:data_center_badilmiltun/pages/start.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import 'utils/color_select.dart';
 
-Future<void> main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
-  final fcmToken = await FirebaseMessaging.instance.getToken();
-  // print(fcmToken);
+void main() {
   SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
     statusBarColor: Colors.transparent, // status bar color
   ));

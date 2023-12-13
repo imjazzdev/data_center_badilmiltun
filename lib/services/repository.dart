@@ -6,18 +6,26 @@ import 'package:data_center_badilmiltun/model/user_ratgas.dart';
 import 'package:http/http.dart' as http;
 
 class Repository {
-  final urlGetPegawaiCuti =
+  final _urlGetPegawaiCuti =
       'https://clone-eremis.djmt.id/pegawai/monitoring_cuti/get_pegawai_sedang_cuti';
 
-  final urlGetPegawaiRatgas =
+  final _urlGetPegawaiRatgas =
       'https://clone-eremis.djmt.id/pegawai/ratgas/ratgas_all/get_pegawai_sedang_ratgas';
 
-  final urlGetJadwalRapatSikoopat =
-      'https://clone-sikoopat.djmt.id/dashboard/fullcalendar?start=2023-10-29T00%3A00%3A00%2B07%3A00&end=2023-12-10T00%3A00%3A00%2B07%3A00';
+  // final _urlGetJadwalRapatSikoopat =
+  //     'https://clone-sikoopat.djmt.id/dashboard/fullcalendar?start=2023-10-29T00%3A00%3A00%2B07%3A00&end=2023-12-10T00%3A00%3A00%2B07%3A00';
+
+  final _urlGetJadwalRapatSikoopat =
+      'https://clone-sikoopat.djmt.id/dashboard/fullcalendar_start_end';
+
+  final _urlPostPengajuanCuti =
+      'https://clone-eremis.djmt.id/pegawai/cuti/get_pegawai';
+
+  final _urlLogin = 'http://restapi.adequateshop.com/api/AuthAccount/Login';
 
   Future getPegawaiSedangCuti() async {
     try {
-      final response = await http.get(Uri.parse(urlGetPegawaiCuti));
+      final response = await http.get(Uri.parse(_urlGetPegawaiCuti));
       if (response.statusCode == 200) {
         Iterable it = jsonDecode(response.body)['data'];
         print(jsonDecode(response.body)['data']);
@@ -32,7 +40,7 @@ class Repository {
 
   Future getPegawaiRatgas() async {
     try {
-      final response = await http.get(Uri.parse(urlGetPegawaiRatgas));
+      final response = await http.get(Uri.parse(_urlGetPegawaiRatgas));
       if (response.statusCode == 200) {
         Iterable it = jsonDecode(response.body)['data'];
         print(jsonDecode(response.body)['data']);
@@ -47,7 +55,7 @@ class Repository {
 
   Future getJadwalRapatSikoopat() async {
     try {
-      final response = await http.get(Uri.parse(urlGetJadwalRapatSikoopat));
+      final response = await http.get(Uri.parse(_urlGetJadwalRapatSikoopat));
       if (response.statusCode == 200) {
         Iterable it = jsonDecode(response.body);
         // print(jsonDecode(response.body));
@@ -62,4 +70,29 @@ class Repository {
       print(e.toString());
     }
   }
+
+  Future postPengajuanCuti() async {
+    try {
+      final response = await http.post(Uri.parse(_urlPostPengajuanCuti),
+          body: {'id_user': '86', 'tanggal_pengajuan_cuti': '04-12-2023'});
+      if (response.statusCode == 201) {
+        return true;
+      } else {
+        return false;
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  Future<http.Response> login(String email, String password) async {
+    return http.post(Uri.parse(_urlLogin),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8'
+        },
+        body:
+            jsonEncode(<String, String>{'email': email, 'password': password}));
+  }
 }
+
+getPegawaiRatgas() {}

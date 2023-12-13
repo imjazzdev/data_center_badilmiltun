@@ -28,7 +28,7 @@ class CarouselBanner extends StatelessWidget {
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(15),
                     child: Image.asset(
-                      'assets/banner2.jpg',
+                      'assets/amin1.jpeg',
                       fit: BoxFit.cover,
                       width: MediaQuery.of(context).size.width * 0.95,
                     ),

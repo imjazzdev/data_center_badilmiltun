@@ -3,7 +3,9 @@ import 'package:data_center_badilmiltun/componen/card_shimmer.dart';
 import 'package:data_center_badilmiltun/componen/no_data_widget.dart';
 import 'package:data_center_badilmiltun/model/jadwal_rapat.dart';
 import 'package:data_center_badilmiltun/model/user_ratgas.dart';
+import 'package:data_center_badilmiltun/pages/jadwal_rapat_search.dart';
 import 'package:data_center_badilmiltun/utils/color_select.dart';
+import 'package:data_center_badilmiltun/utils/val_global.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -18,12 +20,12 @@ class JadwalRapatPage extends StatefulWidget {
 
 class _JadwalRapatPageState extends State<JadwalRapatPage> {
   bool isDataReady = false;
-  List list_jadwal_rapat = [];
   // List list_jadwal_terdekat = [];
   Repository repository = Repository();
 
   getData() async {
-    list_jadwal_rapat = await repository.getJadwalRapatSikoopat();
+    VarGlobal.list_jadwal_rapat = await repository.getJadwalRapatSikoopat();
+    // list_jadwal_rapat = list_jadwal_rapat.reversed.toList();
     // list_jadwal_terdekat =
     //     list_jadwal_rapat.sublist(list_jadwal_rapat.length - 3);
     // print('INI DATA FILTER : $list_jadwal_terdekat[0]');
@@ -31,7 +33,7 @@ class _JadwalRapatPageState extends State<JadwalRapatPage> {
 
   @override
   void initState() {
-    getData();
+    // getData();
     Future.delayed(
       Duration(seconds: 2),
       () {
@@ -51,9 +53,21 @@ class _JadwalRapatPageState extends State<JadwalRapatPage> {
           actions: [
             IconButton(
                 onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => JadwalRapatSearch(),
+                      ));
+                },
+                icon: Icon(
+                  Icons.search,
+                  size: 28,
+                )),
+            IconButton(
+                onPressed: () {
                   AwesomeDialog(
                     context: context,
-                    dialogType: DialogType.info,
+                    dialogType: DialogType.warning,
                     animType: AnimType.rightSlide,
                     body: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -64,13 +78,14 @@ class _JadwalRapatPageState extends State<JadwalRapatPage> {
                         //       color: Colors.blue, fontWeight: FontWeight.bold),
                         // ),
                         Text(
-                          'Menampilkan 20 rapat terakhir, untuk lengkapnya silahkan kunjungi website',
+                          'Menampilkan beberapa rapat kedepan, untuk lebih lengkapnya silahkan kunjungi website',
                           textAlign: TextAlign.center,
                           style: TextStyle(color: Colors.red.shade400),
                         ),
                         TextButton(
                             onPressed: () async {
-                              const url = 'https://www.geeksforgeeks.org/';
+                              const url =
+                                  'https://sikoopat.djmt.id/dashboard/loginpage';
                               if (await canLaunch(url)) {
                                 await launch(url);
                               } else {
@@ -80,7 +95,10 @@ class _JadwalRapatPageState extends State<JadwalRapatPage> {
                             child: Text(
                               'SIKOOPAT',
                               style: TextStyle(
-                                  fontWeight: FontWeight.bold, fontSize: 16),
+                                decoration: TextDecoration.underline,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 16,
+                              ),
                             ))
                       ],
                     ),
@@ -92,13 +110,14 @@ class _JadwalRapatPageState extends State<JadwalRapatPage> {
         ),
         body: isDataReady == false
             ? CardShimmer()
-            : list_jadwal_rapat.isEmpty
+            : VarGlobal.list_jadwal_rapat.isEmpty
                 ? Center(
                     child: NoDataWidget(),
                   )
                 : ListView.builder(
-                    padding: const EdgeInsets.all(20),
-                    itemCount: list_jadwal_rapat.length,
+                    padding: const EdgeInsets.only(
+                        left: 20, right: 20, top: 20, bottom: 10),
+                    itemCount: VarGlobal.list_jadwal_rapat.length,
                     itemBuilder: (context, index) => InkWell(
                       onTap: () {
                         AwesomeDialog(
@@ -114,7 +133,7 @@ class _JadwalRapatPageState extends State<JadwalRapatPage> {
                                     fontWeight: FontWeight.bold),
                               ),
                               Text(
-                                list_jadwal_rapat[index].title,
+                                VarGlobal.list_jadwal_rapat[index].title,
                                 textAlign: TextAlign.center,
                               ),
                               Text(
@@ -124,7 +143,7 @@ class _JadwalRapatPageState extends State<JadwalRapatPage> {
                                     fontWeight: FontWeight.bold),
                               ),
                               Text(
-                                list_jadwal_rapat[index].tempat,
+                                VarGlobal.list_jadwal_rapat[index].tempat,
                               ),
                               Text(
                                 'Tanggal',
@@ -133,7 +152,7 @@ class _JadwalRapatPageState extends State<JadwalRapatPage> {
                                     fontWeight: FontWeight.bold),
                               ),
                               Text(
-                                list_jadwal_rapat[index].tanggal,
+                                VarGlobal.list_jadwal_rapat[index].tanggal,
                               ),
                               Text(
                                 'Pukul',
@@ -142,7 +161,7 @@ class _JadwalRapatPageState extends State<JadwalRapatPage> {
                                     fontWeight: FontWeight.bold),
                               ),
                               Text(
-                                list_jadwal_rapat[index].pukul,
+                                VarGlobal.list_jadwal_rapat[index].pukul,
                               ),
                             ],
                           ),
@@ -192,7 +211,8 @@ class _JadwalRapatPageState extends State<JadwalRapatPage> {
                                   children: [
                                     Expanded(
                                       child: Text(
-                                        list_jadwal_rapat[index].title,
+                                        VarGlobal
+                                            .list_jadwal_rapat[index].title,
                                         overflow: TextOverflow.ellipsis,
                                         maxLines: 1,
                                         style: TextStyle(
@@ -203,7 +223,8 @@ class _JadwalRapatPageState extends State<JadwalRapatPage> {
                                     ),
                                     Expanded(
                                       child: Text(
-                                          list_jadwal_rapat[index].tanggal,
+                                          VarGlobal
+                                              .list_jadwal_rapat[index].tanggal,
                                           textAlign: TextAlign.center,
                                           style: TextStyle(
                                               fontSize: 14,
@@ -218,7 +239,8 @@ class _JadwalRapatPageState extends State<JadwalRapatPage> {
                                                 BorderRadius.circular(10),
                                             color: Colors.blue.shade50),
                                         child: Text(
-                                            list_jadwal_rapat[index].pukul,
+                                            VarGlobal
+                                                .list_jadwal_rapat[index].pukul,
                                             textAlign: TextAlign.center,
                                             style: TextStyle(
                                                 fontSize: 14,
