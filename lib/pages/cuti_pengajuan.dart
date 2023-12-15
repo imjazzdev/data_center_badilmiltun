@@ -4,10 +4,11 @@ import 'dart:convert';
 import 'package:data_center_badilmiltun/model/pengajuan_cuti.dart';
 
 import 'package:data_center_badilmiltun/utils/color_select.dart';
-import 'package:data_center_badilmiltun/utils/var_global.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
+
+import '../utils/val_global.dart';
 
 class CutiPengajuanPage extends StatefulWidget {
   const CutiPengajuanPage({Key? key}) : super(key: key);

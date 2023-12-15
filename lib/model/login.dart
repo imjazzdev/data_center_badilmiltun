@@ -1,13 +1,18 @@
 class UserLogin {
-  int id;
-  String name, email, token;
+  String id_user, nama, nip, token, nama_jabatan;
 
-  UserLogin({this.id = 0, this.name = '', this.email = '', this.token = ''});
+  UserLogin(
+      {this.id_user = '',
+      this.nama = '',
+      this.nip = '',
+      this.token = '',
+      this.nama_jabatan = ''});
   factory UserLogin.fromJson(Map<String, dynamic> json) {
     return UserLogin(
-        id: json['Id'],
-        name: json['Name'],
-        email: json['Email'],
-        token: json['Token']);
+        id_user: json['id_user'],
+        nama: json['nama'],
+        nip: json['nip'],
+        token: json['token'],
+        nama_jabatan: json['nama_jabatan']);
   }
 }

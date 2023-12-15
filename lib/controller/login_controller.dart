@@ -11,32 +11,23 @@ import '../model/login.dart';
 class LoginController {
   Repository repository = Repository();
   var emailCon = TextEditingController(text: '199612112020121005');
-  var passwordCon = TextEditingController(text: '199612112020121005!@#');
+  var passwordCon = TextEditingController(text: '199612112020121005');
   bool isLoading = false;
 
   Future<MyResponse> login() async {
     http.Response result =
         await repository.login(emailCon.text, passwordCon.text);
 
-    // print('STATUS CODE : ${result.statusCode}');
+    print('STATUS CODE : ${result.statusCode}');
 
-    // Map<String, dynamic> myBody = jsonDecode(result.body);
-    // print('RESULT BODY : ${myBody}');
-
-    // MyResponse<UserLogin> myResponse =
-    //     MyResponse.fromJson(myBody, UserLogin.fromJson);
-
-    // debugPrint('MY RESPON MASSAGE : ${myResponse.massage}');
-    print(result.statusCode);
     if (result.statusCode == 200) {
+      // print('RESULT BODY : ${result.body}');
       Map<String, dynamic> myBody = jsonDecode(result.body);
-      print('RESULT BODY : ${myBody}');
 
-      MyResponse<UserLogin> myResponse =
-          MyResponse.fromJson(myBody, UserLogin.fromJson);
-      debugPrint('MY RESPON MASSAGE : ${myResponse.massage}');
+      MyResponse myResponse = MyResponse.fromJson(myBody, UserLogin.fromJson);
+      print('MY RESPON  : ${myResponse.message}');
 
-      // if (myResponse.code == null) {
+      // if (myResponse.data != null) {
       //   final prefs = await SharedPreferences.getInstance();
       //   //simpan token
       //   await prefs.setString('token', myBody['token'] ?? '');
@@ -44,7 +35,8 @@ class LoginController {
 
       return myResponse;
     } else {
-      return MyResponse(code: 1, massage: 'Terjadi kesalahan, coba lagi');
+      return MyResponse(
+          success: false, message: 'Terjadi kesalahan, coba lagi');
     }
   }
 }

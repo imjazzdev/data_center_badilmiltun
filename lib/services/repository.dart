@@ -89,12 +89,10 @@ class Repository {
 
   Future<http.Response> login(String email, String password) async {
     return http.post(Uri.parse(_urlLoginNew),
-        headers: <String, String>{
-          'Content-Type': 'application/json; charset=UTF-8'
-        },
-        body: jsonEncode(
-            <String, String>{'username': email, 'password': password}));
+        // headers: <String, String>{
+        //   'Content-Type': 'application/json; charset=UTF-8'
+        //   // 'Content-Type': 'multipart/form-data'
+        // },
+        body: {'username': email, 'password': password});
   }
 }
-
-getPegawaiRatgas() {}

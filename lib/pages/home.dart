@@ -4,12 +4,15 @@ import 'package:data_center_badilmiltun/componen/carousel_banner.dart';
 import 'package:data_center_badilmiltun/componen/menu_category.dart';
 import 'package:data_center_badilmiltun/componen/rapat_terdekat.dart';
 import 'package:data_center_badilmiltun/model/jadwal_rapat.dart';
+import 'package:data_center_badilmiltun/model/login.dart';
+import 'package:data_center_badilmiltun/model/my_response.dart';
 import 'package:data_center_badilmiltun/services/repository.dart';
 import 'package:data_center_badilmiltun/utils/color_select.dart';
 import 'package:flutter/material.dart';
 // import 'package:shared_preferences/shared_preferences.dart';
 
 import '../componen/no_data_widget.dart';
+import '../controller/login_controller.dart';
 import '../utils/val_global.dart';
 
 class HomePage extends StatefulWidget {
@@ -22,9 +25,20 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   bool isDataReady = false;
   Repository repository = Repository();
+  LoginController _controller = LoginController();
+
+  late MyResponse data_user;
 
   getData() async {
-    VarGlobal.list_jadwal_rapat = await repository.getJadwalRapatSikoopat();
+    // VarGlobal.list_jadwal_rapat = await repository.getJadwalRapatSikoopat();
+    data_user = (await _controller.login()) as MyResponse;
+
+    VarGlobal.nama = data_user.data!.nama;
+    VarGlobal.nip = data_user.data!.nip;
+    VarGlobal.token = data_user.data!.token;
+    VarGlobal.nama_jabatan = data_user.data!.nama_jabatan;
+    VarGlobal.id_user = data_user.data!.id_user;
+    print('PRINT DATA USER : ${VarGlobal.id_user}');
   }
 
   @override
@@ -80,8 +94,10 @@ class _HomePageState extends State<HomePage> {
               ? CardShimmer()
               : VarGlobal.list_jadwal_rapat.isEmpty
                   ? Center(
-                      child: NoDataWidget(),
-                    )
+                      child: Text(
+                      'No Data',
+                      style: TextStyle(color: Colors.grey),
+                    ))
                   : Container(
                       margin: EdgeInsets.only(left: 20, right: 20, bottom: 20),
                       child: ListView.builder(
