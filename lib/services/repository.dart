@@ -1,7 +1,9 @@
 import 'dart:convert';
+// import 'package:data_center_badilmiltun/model/pengajuan_cuti_user.dart';
 
 import 'package:data_center_badilmiltun/model/jadwal_rapat.dart';
 import 'package:data_center_badilmiltun/model/pegawai_cuti.dart';
+import 'package:data_center_badilmiltun/model/pengajuan_cuti_user.dart';
 import 'package:data_center_badilmiltun/model/user_ratgas.dart';
 import 'package:http/http.dart' as http;
 
@@ -71,19 +73,50 @@ class Repository {
     }
   }
 
-  Future postPengajuanCuti() async {
-    try {
-      final response = await http.post(Uri.parse(_urlPostPengajuanCuti),
-          body: {'id_user': '86', 'tanggal_pengajuan_cuti': '04-12-2023'});
-      if (response.statusCode == 201) {
-        return true;
-      } else {
-        return false;
+  Future<PengajuanCutiUser?> submitData1(
+    String id_user,
+    String tanggal_pengajuan_cuti,
+  ) async {
+    var response = await http.post(
+      Uri.https('clone-eremis.djmt.id', '/pegawai/cuti/get_pegawai'),
+      body: {'id_user': '86', 'tanggal_pengajuan_cuti': '04-12-2023'},
+    );
+
+    var data1 = response.body;
+    print('RAW RESPONSE BODY: ${data1}');
+
+    if (response.statusCode == 200) {
+      String responseString = response.body;
+      print(responseString);
+      try {
+        return PengajuanCutiUser.fromJson(jsonDecode(responseString));
+      } catch (e) {
+        print('Error decoding JSON: $e');
+        return null;
       }
-    } catch (e) {
-      print(e);
+    } else {
+      return null;
     }
   }
+  // Future postPengajuanCuti() async {
+  //   try {
+  //     final response = await http.post(Uri.parse(_urlPostPengajuanCuti),
+  //         body: {'id_user': '86', 'tanggal_pengajuan_cuti': '04-12-2023'});
+  //     if (response.statusCode == 200) {
+  //       Iterable it = jsonDecode(response.body);
+  //       print(jsonDecode(response.body));
+  //       List<PengajuanCutiUser> pengajuanCutiUser =
+  //           it.map((e) => PengajuanCutiUser.fromJson(e)).toList();
+
+  //       print(pengajuanCutiUser);
+  //       return pengajuanCutiUser;
+  //     } else {
+  //       return false;
+  //     }
+  //   } catch (e) {
+  //     print(e);
+  //   }
+  // }
 
   Future<http.Response> login(String email, String password) async {
     return http.post(Uri.parse(_urlLogin),

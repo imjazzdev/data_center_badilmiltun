@@ -8,7 +8,6 @@ import 'package:data_center_badilmiltun/pages/start.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
-
 import 'utils/color_select.dart';
 
 void main() {

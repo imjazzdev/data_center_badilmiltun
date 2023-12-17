@@ -2,6 +2,8 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:data_center_badilmiltun/model/pengajuan_cuti.dart';
+import 'package:data_center_badilmiltun/model/pengajuan_cuti_user.dart';
+import 'package:data_center_badilmiltun/services/repository.dart';
 
 import 'package:data_center_badilmiltun/utils/color_select.dart';
 import 'package:data_center_badilmiltun/utils/var_global.dart';
@@ -135,6 +137,27 @@ class _CutiPengajuanPageState extends State<CutiPengajuanPage> {
     });
   }
 
+  List<PengajuanCutiUser> pengajuan_cuti_user = [];
+  Repository repository = Repository();
+
+  getData() async {
+    pengajuan_cuti_user = (await repository.submitData1(
+        "id_user", "tanggal_pengajuan_cuti")) as List<PengajuanCutiUser>;
+  }
+
+  void initState() {
+    getData();
+    // Future.delayed(
+    //   Duration(seconds: 2),
+    //   () {
+    //     setState(() {});
+    //   },
+    // );
+    setState(() {});
+
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -255,27 +278,6 @@ class _CutiPengajuanPageState extends State<CutiPengajuanPage> {
                         ),
                       ),
                     ]),
-                    // TableRow(children: [
-                    //   Padding(
-                    //     padding: const EdgeInsets.only(bottom: 10),
-                    //     child: Text('Tgl Pengajuan Cuti',
-                    //         style: TextStyle(
-                    //           fontSize: 14,
-                    //         )),
-                    //   ),
-                    //   Container(
-                    //     margin: EdgeInsets.only(bottom: 10),
-                    //     padding: EdgeInsets.only(left: 10),
-                    //     alignment: Alignment.centerLeft,
-                    //     height: 50,
-                    //     decoration: BoxDecoration(border: Border.all()),
-                    //     child: Text(
-                    //         DateFormat("dd-MM-yyyy").format(DateTime.now()),
-                    //         style: TextStyle(
-                    //           fontSize: 16,
-                    //         )),
-                    //   ),
-                    // ]),
                     TableRow(children: [
                       Padding(
                         padding: const EdgeInsets.only(bottom: 10),
@@ -495,24 +497,6 @@ class _CutiPengajuanPageState extends State<CutiPengajuanPage> {
                   },
                 ),
               ));
-              // String id_user = "60";
-              // String tanggal_pengajuan_cuti = "22";
-              // String cuti_nama = "as";
-              // String cuti_nip = "08978676656";
-              // String cuti_jabatan = "tes";
-              // String cuti_masa_kerja = "1";
-              // String cuti_unit_kerja = "sa";
-              // String jenis_cuti = "CUTI TAHUNAN";
-              // String alasan_cuti = "sa";
-              // String lama_cuti = "2";
-              // String ket_lama_cuti = "2";
-              // String mulai_cuti = "08-12-2023";
-              // String selesai_cuti = "09-12-2023";
-              // String alamat_cuti = "da";
-              // String id_atasan = "2";
-              // String id_pejabat = "2";
-              // String id_mengetahui = "2";
-
               String id_user = "100";
               String tanggal_pengajuan_cuti =
                   DateFormat('dd-MM-yyyy').format(_dateTime).toString();
@@ -557,19 +541,6 @@ class _CutiPengajuanPageState extends State<CutiPengajuanPage> {
                 _dataModel = data!;
               });
             },
-            // child: Row(
-            //   mainAxisAlignment: MainAxisAlignment.center,
-            //   children: [
-            //     Icon(Icons.check),
-            //     SizedBox(
-            //       width: 5,
-            //     ),
-            //     Text(
-            //       'Save',
-            //       style: TextStyle(fontWeight: FontWeight.bold),
-            //     ),
-            //   ],
-            // )
           ),
           SizedBox(
             height: 20,

@@ -43,12 +43,37 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         body: Stack(children: [
-      Column(
-        children: [
-          Flexible(
-              child: Image(
-                  height: 400, width: 409, image: AssetImage("assets/bg.jpg"))),
-        ],
+      Container(
+        decoration: BoxDecoration(
+          boxShadow: [
+            BoxShadow(
+              color: Color.fromARGB(255, 12, 112, 226).withOpacity(0.5),
+              spreadRadius: 0,
+              blurRadius: 1.5,
+              offset: Offset(0, 0),
+            )
+          ],
+        ),
+        child: Flexible(
+            child: Image(
+                opacity: AlwaysStoppedAnimation(0.5),
+                height: 400,
+                width: 409,
+                image: AssetImage("assets/gdlogg.jpeg"))),
+      ),
+      Container(
+        padding: EdgeInsets.all(5),
+        height: 50,
+        child: Flexible(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              Image(height: 50, image: AssetImage("assets/logo_miltun.jpg")),
+              Image(height: 50, image: AssetImage("assets/logo-sikoopat.png")),
+              Image(height: 35, image: AssetImage("assets/logo-eremis.jpeg"))
+            ],
+          ),
+        ),
       ),
       Positioned(
         bottom: 40,
@@ -77,69 +102,72 @@ class _LoginPageState extends State<LoginPage> {
           ),
         ),
       ),
-      Align(
-        alignment: Alignment.center,
-        child: Material(
-          borderRadius: BorderRadius.circular(20),
-          elevation: 15,
-          color: Color.fromARGB(255, 2, 60, 155).withOpacity(1),
-          child: Container(
-            height: MediaQuery.of(context).size.height * 0.3,
-            width: 300,
-            margin: EdgeInsets.all(20),
-            padding: EdgeInsets.only(top: 15, bottom: 15),
-            child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Text(
-                    "Login",
-                    style: GoogleFonts.andika(
-                      color: Colors.white,
-                      fontSize: 30,
+      Flexible(
+        child: Align(
+          alignment: Alignment.center,
+          child: Material(
+            borderRadius: BorderRadius.circular(20),
+            elevation: 15,
+            color: Color.fromARGB(255, 2, 60, 155).withOpacity(1),
+            child: Container(
+              height: MediaQuery.of(context).size.height * 0.3,
+              width: 300,
+              margin: EdgeInsets.all(20),
+              padding: EdgeInsets.only(top: 15, bottom: 15),
+              child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Text(
+                      "Login",
+                      style: GoogleFonts.andika(
+                        color: Colors.white,
+                        fontSize: 30,
+                      ),
                     ),
-                  ),
-                  TextField(
-                    controller: _controller.emailCon,
-                    decoration: InputDecoration(
-                        fillColor: Colors.lightBlue[50],
-                        filled: true,
-                        prefixIcon: Icon(Icons.person),
-                        prefixStyle: TextStyle(
-                            color: Colors.blue, fontWeight: FontWeight.w500),
-                        hintText: "Email",
-                        border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(25))),
-                  ),
-                  SizedBox(
-                    height: 10,
-                    width: 10,
-                  ),
-                  Container(
-                    child: TextField(
-                      controller: _controller.passwordCon,
-                      obscureText: _isObscure,
+                    TextField(
+                      controller: _controller.emailCon,
                       decoration: InputDecoration(
                           fillColor: Colors.lightBlue[50],
                           filled: true,
-                          prefixIcon: Icon(Icons.lock),
+                          prefixIcon: Icon(Icons.person),
                           prefixStyle: TextStyle(
                               color: Colors.blue, fontWeight: FontWeight.w500),
-                          hintText: "password",
-                          suffixIcon: IconButton(
-                            icon: Icon(_isObscure
-                                ? Icons.visibility
-                                : Icons.visibility_off),
-                            onPressed: () {
-                              setState(() {
-                                _isObscure = !_isObscure;
-                              });
-                            },
-                          ),
+                          hintText: "Email",
                           border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(25))),
                     ),
-                  ),
-                ]),
+                    SizedBox(
+                      height: 10,
+                      width: 10,
+                    ),
+                    Container(
+                      child: TextField(
+                        controller: _controller.passwordCon,
+                        obscureText: _isObscure,
+                        decoration: InputDecoration(
+                            fillColor: Colors.lightBlue[50],
+                            filled: true,
+                            prefixIcon: Icon(Icons.lock),
+                            prefixStyle: TextStyle(
+                                color: Colors.blue,
+                                fontWeight: FontWeight.w500),
+                            hintText: "password",
+                            suffixIcon: IconButton(
+                              icon: Icon(_isObscure
+                                  ? Icons.visibility
+                                  : Icons.visibility_off),
+                              onPressed: () {
+                                setState(() {
+                                  _isObscure = !_isObscure;
+                                });
+                              },
+                            ),
+                            border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(25))),
+                      ),
+                    ),
+                  ]),
+            ),
           ),
         ),
       ),
