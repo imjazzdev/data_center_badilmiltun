@@ -1,3 +1,4 @@
+import 'package:data_center_badilmiltun/componen/no_data_widget.dart';
 import 'package:data_center_badilmiltun/utils/color_select.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -18,6 +19,7 @@ class _JadwalRapatSearchState extends State<JadwalRapatSearch> {
       appBar: AppBar(
         title: Text('Search'),
       ),
+      body: NoDataWidget(),
       bottomNavigationBar: Container(
         height: 150,
         padding: EdgeInsets.only(left: 20, right: 20),

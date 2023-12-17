@@ -30,7 +30,7 @@ class MyApp extends StatelessWidget {
             backgroundColor: ColorSelect.blue.withOpacity(0.8),
             elevation: 0,
           )),
-      home: const StartPage(),
+      home: const LoginPage(),
     );
   }
 }

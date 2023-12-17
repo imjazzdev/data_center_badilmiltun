@@ -188,12 +188,15 @@ class _JadwalRapatPageState extends State<JadwalRapatPage> {
                             Flexible(
                               flex: 3,
                               child: Container(
-                                  height: 85,
-                                  width: 85,
+                                  height: 90,
+                                  width: 90,
                                   decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(15),
                                       color: Colors.grey.shade100),
-                                  child: Image.asset('assets/rapat.png')),
+                                  child: Image.asset(
+                                    'assets/rapat.png',
+                                   
+                                  )),
                             ),
                             Flexible(
                               flex: 1,
