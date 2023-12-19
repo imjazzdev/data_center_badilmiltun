@@ -8,4 +8,11 @@ class VarGlobal {
   static String token = '';
   static String nip = '';
   static String nama_jabatan = '';
+
+  //
+  static String masa_kerja = '';
+  static String unit_kerja = '';
+  static String atasan = '';
+  static String pejabat = '';
+  static String mengetahui = '';
 }

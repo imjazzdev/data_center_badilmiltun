@@ -79,6 +79,10 @@ Future<PengajuanCuti> submitData(
 
 class _CutiPengajuanPageState extends State<CutiPengajuanPage> {
   late PengajuanCuti _dataModel;
+  TextEditingController jabatan =
+      TextEditingController(text: VarGlobal.nama_jabatan);
+  TextEditingController unitKerja =
+      TextEditingController(text: 'Sekretariat Ditjen Badilmiltun');
   TextEditingController alasanCuti =
       TextEditingController(text: 'Keperluan keluarga');
   TextEditingController alamatSaatMenjalankanCuti =
@@ -86,6 +90,9 @@ class _CutiPengajuanPageState extends State<CutiPengajuanPage> {
   TextEditingController lamaCuti = TextEditingController();
   TextEditingController tglPengajuanCuti = TextEditingController();
   TextEditingController atasanLangsung = TextEditingController();
+  TextEditingController lamaBekerja = TextEditingController();
+  TextEditingController mengetahui = TextEditingController();
+
   TextEditingController pejabatBerwenang = TextEditingController();
 
   String? valJenisCuti = 'CUTI TAHUNAN';
@@ -196,7 +203,7 @@ class _CutiPengajuanPageState extends State<CutiPengajuanPage> {
                           style: TextStyle(
                             fontSize: 16,
                           )),
-                      Text('Theo Alfianto, S.T',
+                      Text(VarGlobal.nama,
                           style: TextStyle(
                             fontSize: 16,
                           )),
@@ -206,7 +213,7 @@ class _CutiPengajuanPageState extends State<CutiPengajuanPage> {
                           style: TextStyle(
                             fontSize: 16,
                           )),
-                      Text('Pranata Komputer',
+                      Text(VarGlobal.nama_jabatan,
                           style: TextStyle(
                             fontSize: 16,
                           )),
@@ -216,17 +223,19 @@ class _CutiPengajuanPageState extends State<CutiPengajuanPage> {
                           style: TextStyle(
                             fontSize: 16,
                           )),
-                      Text('Sekretariat Ditjen Badilmiltun',
-                          style: TextStyle(
-                            fontSize: 16,
-                          )),
+                      TextField(
+                        decoration: InputDecoration(
+                          border: InputBorder.none,
+                        ),
+                        controller: unitKerja,
+                      ),
                     ]),
                     TableRow(children: [
                       Text('NIP',
                           style: TextStyle(
                             fontSize: 16,
                           )),
-                      Text('08978676656',
+                      Text(VarGlobal.nip,
                           style: TextStyle(
                             fontSize: 16,
                           )),
@@ -404,6 +413,25 @@ class _CutiPengajuanPageState extends State<CutiPengajuanPage> {
                     TableRow(children: [
                       Padding(
                         padding: const EdgeInsets.only(bottom: 10),
+                        child: Text('Lama Bekerja'),
+                      ),
+                      Container(
+                        margin: EdgeInsets.only(bottom: 10),
+                        padding: EdgeInsets.only(left: 10),
+                        height: 50,
+                        decoration: BoxDecoration(border: Border.all()),
+                        child: TextField(
+                          decoration: InputDecoration(
+                            border: InputBorder.none,
+                            // hintText: "jumlah hari"
+                          ),
+                          controller: lamaBekerja,
+                        ),
+                      ),
+                    ]),
+                    TableRow(children: [
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 10),
                         child: Text('Alamat Saat Menjalankan Cuti'),
                       ),
                       Container(
@@ -478,6 +506,24 @@ class _CutiPengajuanPageState extends State<CutiPengajuanPage> {
                         ),
                       ),
                     ]),
+                    TableRow(children: [
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 10),
+                        child: Text('Mengetahui'),
+                      ),
+                      Container(
+                        margin: EdgeInsets.only(bottom: 10),
+                        padding: EdgeInsets.only(left: 10),
+                        height: 50,
+                        decoration: BoxDecoration(
+                          border: Border.all(),
+                        ),
+                        child: TextField(
+                          decoration: InputDecoration(border: InputBorder.none),
+                          controller: mengetahui,
+                        ),
+                      ),
+                    ]),
                   ],
                 )
               ],
@@ -498,18 +544,18 @@ class _CutiPengajuanPageState extends State<CutiPengajuanPage> {
                   },
                 ),
               ));
-              String id_user = "100";
+              String id_user = VarGlobal.id_user;
               String tanggal_pengajuan_cuti =
                   DateFormat('dd-MM-yyyy').format(_dateTime).toString();
-              String cuti_nama = "as";
-              String cuti_nip = "08978676656";
-              String cuti_jabatan = "tes";
-              String cuti_masa_kerja = "1";
-              String cuti_unit_kerja = "sa";
-              String jenis_cuti = "CUTI TAHUNAN";
+              String cuti_nama = VarGlobal.nama;
+              String cuti_nip = VarGlobal.nip;
+              String cuti_jabatan = VarGlobal.nama_jabatan;
+              String cuti_masa_kerja = lamaBekerja.text;
+              String cuti_unit_kerja = unitKerja.text;
+              String jenis_cuti = valJenisCuti!;
               String alasan_cuti = alasanCuti.text;
               String lama_cuti = lamaCuti.text;
-              String ket_lama_cuti = "2";
+              String ket_lama_cuti = lamaCuti.text;
               String mulai_cuti =
                   DateFormat('dd-MM-yyyy').format(_dateMulai).toString();
               String selesai_cuti =
@@ -517,7 +563,7 @@ class _CutiPengajuanPageState extends State<CutiPengajuanPage> {
               String alamat_cuti = alamatSaatMenjalankanCuti.text;
               String id_atasan = atasanLangsung.text;
               String id_pejabat = pejabatBerwenang.text;
-              String id_mengetahui = "2";
+              String id_mengetahui = mengetahui.text;
 
               PengajuanCuti? data = await submitData(
                   id_user,

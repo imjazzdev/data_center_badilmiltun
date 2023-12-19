@@ -2,10 +2,14 @@ import 'dart:convert';
 // import 'package:data_center_badilmiltun/model/pengajuan_cuti_user.dart';
 
 import 'package:data_center_badilmiltun/model/jadwal_rapat.dart';
+import 'package:data_center_badilmiltun/pages/cuti_pengajuan.dart';
+
 import 'package:data_center_badilmiltun/model/pegawai_cuti.dart';
 import 'package:data_center_badilmiltun/model/pengajuan_cuti_user.dart';
 import 'package:data_center_badilmiltun/model/user_ratgas.dart';
+import 'package:data_center_badilmiltun/utils/val_global.dart';
 import 'package:http/http.dart' as http;
+import 'package:intl/intl.dart';
 
 class Repository {
   final _urlGetPegawaiCuti =
@@ -81,17 +85,22 @@ class Repository {
   ) async {
     var response = await http.post(
       Uri.https('clone-eremis.djmt.id', '/pegawai/cuti/get_pegawai'),
-      body: {'id_user': '86', 'tanggal_pengajuan_cuti': '04-12-2023'},
+      body: {
+        'id_user': VarGlobal.id_user,
+        'tanggal_pengajuan_cuti': '22-12-2023'
+      },
     );
 
     var data1 = response.body;
-    print('RAW RESPONSE BODY: ${data1}');
+    //print('RAW RESPONSE BODY: ${data1}');
 
     if (response.statusCode == 200) {
-      String responseString = response.body;
-      print(responseString);
+      String responseString =
+          jsonDecode(response.body)['data']['pegawai']['unit_kerja'];
+      //print(responseString);
       try {
-        return PengajuanCutiUser.fromJson(jsonDecode(responseString));
+        print(' RESPONSE STRING: ${responseString}');
+        return PengajuanCutiUser.fromJson(responseString);
       } catch (e) {
         print('Error decoding JSON: $e');
         return null;

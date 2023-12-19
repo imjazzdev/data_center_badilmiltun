@@ -29,7 +29,7 @@ class PengajuanCutiUser {
 
 class Data {
   Pegawai pegawai;
-  int masaKerja;
+  String masaKerja;
   String atasan;
   String pejabat;
   String mengetahui;

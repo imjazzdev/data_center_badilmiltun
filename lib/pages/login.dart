@@ -102,96 +102,73 @@ class _LoginPageState extends State<LoginPage> {
           ),
         ),
       ),
-      Align(
-        alignment: Alignment.center,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Material(
-              borderRadius: BorderRadius.circular(20),
-              elevation: 15,
-              color: Color.fromARGB(255, 2, 60, 155).withOpacity(1),
-              child: Container(
-                height: MediaQuery.of(context).size.height * 0.3,
-                width: 300,
-                margin: EdgeInsets.all(20),
-                padding: EdgeInsets.only(top: 15, bottom: 15),
-                child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Text(
-                        "Login",
-                        style: GoogleFonts.andika(
-                          color: Colors.white,
-                          fontSize: 30,
-                        ),
+      Flexible(
+        child: Align(
+          alignment: Alignment.center,
+          child: Material(
+            borderRadius: BorderRadius.circular(20),
+            elevation: 15,
+            color: Color.fromARGB(255, 2, 60, 155).withOpacity(1),
+            child: Container(
+              height: MediaQuery.of(context).size.height * 0.3,
+              width: 300,
+              margin: EdgeInsets.all(20),
+              padding: EdgeInsets.only(top: 15, bottom: 15),
+              child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Text(
+                      "Login",
+                      style: GoogleFonts.andika(
+                        color: Colors.white,
+                        fontSize: 30,
                       ),
-                      TextField(
-                        controller: _controller.emailCon,
+                    ),
+                    TextField(
+                      controller: _controller.emailCon,
+                      decoration: InputDecoration(
+                          fillColor: Colors.lightBlue[50],
+                          filled: true,
+                          prefixIcon: Icon(Icons.person),
+                          prefixStyle: TextStyle(
+                              color: Colors.blue, fontWeight: FontWeight.w500),
+                          hintText: "Email",
+                          border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(25))),
+                    ),
+                    SizedBox(
+                      height: 10,
+                      width: 10,
+                    ),
+                    Container(
+                      child: TextField(
+                        controller: _controller.passwordCon,
+                        obscureText: _isObscure,
                         decoration: InputDecoration(
                             fillColor: Colors.lightBlue[50],
                             filled: true,
-                            prefixIcon: Icon(Icons.person),
+                            prefixIcon: Icon(Icons.lock),
                             prefixStyle: TextStyle(
                                 color: Colors.blue,
                                 fontWeight: FontWeight.w500),
-                            hintText: "Email",
+                            hintText: "password",
+                            suffixIcon: IconButton(
+                              icon: Icon(_isObscure
+                                  ? Icons.visibility
+                                  : Icons.visibility_off),
+                              onPressed: () {
+                                setState(() {
+                                  _isObscure = !_isObscure;
+                                });
+                              },
+                            ),
                             border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(25))),
                       ),
-                      SizedBox(
-                        height: 10,
-                        width: 10,
-                      ),
-                      Container(
-                        child: TextField(
-                          controller: _controller.passwordCon,
-                          obscureText: _isObscure,
-                          decoration: InputDecoration(
-                              fillColor: Colors.lightBlue[50],
-                              filled: true,
-                              prefixIcon: Icon(Icons.lock),
-                              prefixStyle: TextStyle(
-                                  color: Colors.blue,
-                                  fontWeight: FontWeight.w500),
-                              hintText: "password",
-                              suffixIcon: IconButton(
-                                icon: Icon(_isObscure
-                                    ? Icons.visibility
-                                    : Icons.visibility_off),
-                                onPressed: () {
-                                  setState(() {
-                                    _isObscure = !_isObscure;
-                                  });
-                                },
-                              ),
-                              border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(25))),
-                        ),
-                      ),
-                    ]),
-              ),
+                    ),
+                  ]),
             ),
-            Positioned(
-              child: Container(
-                width: 300,
-                height: 100,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Image.asset(
-                      'assets/logo-eremis.jpeg',
-                      height: 40,
-                    ),
-                    Image.asset(
-                      'assets/logo-sikoopat.png',
-                      height: 40,
-                    ),
-                  ],
-                ),
-              ),
-            )
-          ],
+          ),
         ),
       ),
     ]));
