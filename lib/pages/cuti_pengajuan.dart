@@ -94,7 +94,10 @@ class _CutiPengajuanPageState extends State<CutiPengajuanPage> {
   TextEditingController mengetahui = TextEditingController();
 
   TextEditingController pejabatBerwenang = TextEditingController();
-
+  String valAatasan =
+      'Jefri Ardianto, S.T., M.M. (Kabag Organisasi dan Tata Laksana Sekretariat)';
+  String valPejabat =
+      'Jefri Ardianto, S.T., M.M. (Kabag Organisasi dan Tata Laksana Sekretariat)';
   String? valJenisCuti = 'CUTI TAHUNAN';
   List<String> jenis_cuti = [
     'CUTI TAHUNAN',
@@ -473,38 +476,62 @@ class _CutiPengajuanPageState extends State<CutiPengajuanPage> {
                     TableRow(children: [
                       Padding(
                         padding: const EdgeInsets.only(bottom: 10),
-                        child: Text('Atasan Lansung'),
+                        child: Text('Atasan Langsung'),
                       ),
-                      Container(
-                        margin: EdgeInsets.only(bottom: 10),
-                        padding: EdgeInsets.only(left: 10),
-                        height: 50,
-                        decoration: BoxDecoration(
-                          border: Border.all(),
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 10),
+                        child: Container(
+                          padding: EdgeInsets.only(left: 10),
+                          decoration: BoxDecoration(border: Border.all()),
+                          child: DropdownButton(
+                            hint: Text("Select Status"),
+                            underline: SizedBox(),
+                            isExpanded: true,
+                            value: valAatasan,
+                            items: VarGlobal.atasan_langsung.map((value) {
+                              return DropdownMenuItem(
+                                child: Text(value),
+                                value: value,
+                              );
+                            }).toList(),
+                            onChanged: (value) {
+                              setState(() {
+                                valAatasan = value!;
+                              });
+                            },
+                          ),
                         ),
-                        child: TextField(
-                          decoration: InputDecoration(border: InputBorder.none),
-                          controller: atasanLangsung,
-                        ),
-                      ),
+                      )
                     ]),
                     TableRow(children: [
                       Padding(
                         padding: const EdgeInsets.only(bottom: 10),
-                        child: Text('Pejabat yang berwenang'),
+                        child: Text('pejabat yang Berwewenang'),
                       ),
-                      Container(
-                        margin: EdgeInsets.only(bottom: 10),
-                        padding: EdgeInsets.only(left: 10),
-                        height: 50,
-                        decoration: BoxDecoration(
-                          border: Border.all(),
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 10),
+                        child: Container(
+                          padding: EdgeInsets.only(left: 10),
+                          decoration: BoxDecoration(border: Border.all()),
+                          child: DropdownButton(
+                            hint: Text("Select Status"),
+                            underline: SizedBox(),
+                            isExpanded: true,
+                            value: valPejabat,
+                            items: VarGlobal.pejabat_berwewenang.map((value) {
+                              return DropdownMenuItem(
+                                child: Text(value),
+                                value: value,
+                              );
+                            }).toList(),
+                            onChanged: (value) {
+                              setState(() {
+                                valPejabat = value!;
+                              });
+                            },
+                          ),
                         ),
-                        child: TextField(
-                          decoration: InputDecoration(border: InputBorder.none),
-                          controller: pejabatBerwenang,
-                        ),
-                      ),
+                      )
                     ]),
                     TableRow(children: [
                       Padding(
