@@ -89,7 +89,6 @@ class _CutiPengajuanPageState extends State<CutiPengajuanPage> {
       TextEditingController(text: 'Jakarta');
   TextEditingController lamaCuti = TextEditingController();
   TextEditingController tglPengajuanCuti = TextEditingController();
-  TextEditingController atasanLangsung = TextEditingController();
   TextEditingController lamaBekerja = TextEditingController();
   TextEditingController mengetahui = TextEditingController();
 
@@ -588,8 +587,8 @@ class _CutiPengajuanPageState extends State<CutiPengajuanPage> {
               String selesai_cuti =
                   DateFormat('dd-MM-yyyy').format(_dateSelesai).toString();
               String alamat_cuti = alamatSaatMenjalankanCuti.text;
-              String id_atasan = atasanLangsung.text;
-              String id_pejabat = pejabatBerwenang.text;
+              String id_atasan = valAatasan;
+              String id_pejabat = valPejabat;
               String id_mengetahui = mengetahui.text;
 
               PengajuanCuti? data = await submitData(
